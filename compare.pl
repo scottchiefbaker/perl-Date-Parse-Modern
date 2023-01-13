@@ -100,7 +100,7 @@ if ($benchmark) {
 	exit;
 }
 
-printf("%38s = %14s = %14s\n", "Input String", "Date::Parse", "Scott");
+printf("%38s = %14s = %14s\n", "Input String", "Date::Parse", "D::P::Modern");
 foreach (@times) {
 	my $x = Date::Parse::str2time($_) // 0;
 	my $y = strtotime($_, $debug)     // 0;
