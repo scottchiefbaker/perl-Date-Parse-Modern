@@ -248,10 +248,6 @@ sub strtotime {
 		$year += 1900;
 	}
 
-	if ($debug) {
-		printf("%38s = %02d/%02d/%02d %02d:%02d:%02d\n", $str, $year || -1, $month || -1, $day || -1, $hour, $min, $sec);
-	}
-
 	# If we have all the requisite pieces we build a unixtime
 	my $ret;
 	eval {
@@ -262,6 +258,7 @@ sub strtotime {
 	# Either: +1000 or -0700
 	# or
 	# 11:53 PST (Three or four chars after a time)
+	my $tz_offset_seconds = 0;
 	if ($ret && $str =~ m/(\s([+-])(\d{2})(\d{2})|:\d{2} ([a-zA-Z]{3,4})\b|\d{2}(Z)$)/) {
 
 		my $str_offset = 0;
@@ -281,7 +278,7 @@ sub strtotime {
 			}
 		}
 
-		$ret -= $str_offset;
+		$tz_offset_seconds = $str_offset;
 	# No timezone to account for so we assume the local timezone
 	} elsif ($ret) {
 		# We get the local timezone by creating local time obj and a UTC time obj
@@ -289,8 +286,18 @@ sub strtotime {
 		my @t            = localtime($ret);
 		my $local_offset = (Time::Local::timegm(@t) - Time::Local::timelocal(@t));
 
-		$ret -= $local_offset;
+		$tz_offset_seconds = $local_offset;
 	}
+
+	$ret -= $tz_offset_seconds;
+
+	if ($debug) {
+		print "\e[38;5;45m";
+		printf("%*s = YYYY-MM-DD HH:II:SS (timezone offset)\n", length($str) + 2, "Input string");
+		print "\e[0m";
+		printf("'%s' = %02d-%02d-%02d %02d:%02d:%02d (%d)\n", $str, $year || -1, $month || -1, $day || -1, $hour, $min, $sec, $tz_offset_seconds);
+	}
+
 
 	return $ret;
 }
