@@ -22,7 +22,7 @@ use warnings;
 use v5.16;
 use Getopt::Long;
 
-use Benchmark;
+use Benchmark qw(cmpthese);
 
 # The OG
 use Date::Parse qw(str2time);
@@ -93,8 +93,8 @@ if ($benchmark) {
 	print "Comparing " . scalar(@times) . " strings\n";
 
 	cmpthese($num, {
-		'Scott'       => sub { foreach(@times) { my $x = strtotime($_);             }; },
-		'Date::Parse' => sub { foreach(@times) { my $x = Date::Parse::str2time($_); }; },
+		'Date::Parse::Modern' => sub { foreach(@times) { my $x = Date::Parse::Modern::strtotime($_); }; },
+		'Date::Parse'         => sub { foreach(@times) { my $x = Date::Parse::str2time($_);          }; },
 	});
 
 	exit;
@@ -141,29 +141,12 @@ sub benchmark_individual {
 		print "Comparing '$str'\n";
 
 		cmpthese($num, {
-				'Scott'       => sub { my $x = strtotime($str);             },
-				'Date::Parse' => sub { my $x = Date::Parse::str2time($str); },
-			});
+			'Date::Parse::Modern' => sub { my $x = Date::Parse::Modern::strtotime($str); },
+			'Date::Parse'         => sub { my $x = Date::Parse::str2time($str);          },
+		});
 
 		print "\n";
 	}
-	exit;
-}
-
-sub benchmark2 {
-	my $str = $_[0];
-
-	use Benchmark qw(cmpthese);
-	$str ||= "16 Nov 94 22:28:20 +1000";
-	#$str ||= "May  4 01:04:16";
-
-	print "Comparing: '$str'\n";
-
-	cmpthese(100000, {
-		'Date::Parse' => sub { Date::Parse::str2time($str) },
-		'Scott'       => sub { main::strtotime($str) },
-	});
-
 	exit;
 }
 
