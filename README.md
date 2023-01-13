@@ -33,7 +33,10 @@ affect performance of the more common strings.
 
 `Date::Parse::Modern` exports the `strtotime()` function automatically.
 
-All the "magic" in `Date::Parse::Modern` is done using regular expressions looking for common datetime
+Simply feed `strtotime()` a string with some type of date or time in it, and it will return an
+integer unixtime. If the string is unparseable, or a weird error occurs, it will return `undef`.
+
+All the "magic" in `Date::Parse::Modern` is done using regular expressions that look for common datetime
 formats. Common formats like YYYY-MM-DD and HH:II:SS are easily detected and converted to the
 appropriate formats. This allows the date or time to be found anywhere in the string, in (almost) any
 order. In all cases, the day of the week is ignored in the input string.
