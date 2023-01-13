@@ -304,8 +304,8 @@ Performance varies depending on string input
 Running the entire test suite through both strtotime() (mine) and
 Date::Parse::str2time() via --bench gets the following output:
 
-$ perl baker-strtotime.pl --bench
-Comparing 24 strings
-                    Rate           Date::Parse  D:P:M
-Date::Parse         1562/s          --          -31%
-Date::Parse::Modern 2257/s         44%           --
+$ perl -I lib compare.pl --bench
+Comparing 31 strings
+                      Rate         Date::Parse Date::Parse::Modern
+Date::Parse         1208/s                  --                -26%
+Date::Parse::Modern 1623/s                 34%                  --
