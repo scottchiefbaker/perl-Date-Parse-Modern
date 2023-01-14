@@ -261,23 +261,27 @@ sub strtotime {
 	# or
 	# 11:53 PST (Three or four chars after a time)
 	my $tz_offset_seconds = 0;
+	my $tz_str = '';
 	if ($ret && $str =~ m/(\s([+-])(\d{2})(\d{2})|:\d{2} ([A-Z]{1,4})\b|\d{2}(Z)$)/) {
 
 		my $str_offset = 0;
 		if ($5 || $6)  {
 			my $tz_code = $5 || $6 || '';
 
+
 			# Timezone offsets are in hours, so we convert to seconds
 			$str_offset  = $TZ_OFFSET ->{$tz_code} || 0;
 			$str_offset *= 3600;
 
 			#k("$tz_code = $str_offset");
+			$tz_str = $tz_code;
 		} else {
 			# Break the input string into parts so we can do math
 			$str_offset = ($3 + ($4 / 60)) * 3600;
 			if ($2 eq "-") {
 				$str_offset *= -1;
 			}
+			$tz_str = "$2$3$4";
 		}
 
 		$tz_offset_seconds = $str_offset;
@@ -289,6 +293,7 @@ sub strtotime {
 		my $local_offset = (Time::Local::timegm(@t) - Time::Local::timelocal(@t));
 
 		$tz_offset_seconds = $local_offset;
+		$tz_str = 'No Timezone found';
 	}
 
 	$ret -= $tz_offset_seconds;
@@ -297,7 +302,7 @@ sub strtotime {
 		my $color = "\e[38;5;45m";
 		my $reset = "\e[0m";
 		my $header = sprintf("%*s = YYYY-MM-DD HH:II:SS (timezone offset)", length($str) + 2, "Input string");
-		my $output = sprintf("'%s' = %02d-%02d-%02d %02d:%02d:%02d (%d)", $str, $year || -1, $month || -1, $day || -1, $hour, $min, $sec, $tz_offset_seconds);
+		my $output = sprintf("'%s' = %02d-%02d-%02d %02d:%02d:%02d (%s = %d seconds)", $str, $year || -1, $month || -1, $day || -1, $hour, $min, $sec, $tz_str, $tz_offset_seconds);
 
 		print STDERR $color . $header . $reset . "\n";
 		print STDERR $output . "\n";
