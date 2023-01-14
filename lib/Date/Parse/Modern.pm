@@ -100,12 +100,12 @@ formats. Common formats like YYYY-MM-DD and HH:II:SS are easily detected and con
 appropriate formats. This allows the date or time to be found anywhere in the string, in (almost) any
 order. In all cases, the day of the week is ignored in the input string.
 
-B<Note:> Strings without a year are assumed to be in the current year. Example: 'May 15th, 10:15am'
+B<Note:> Strings without a year are assumed to be in the current year. Example: C<May 15th, 10:15am>
 
-B<Note:> Strings with only time are assumed to be the current day. Example: '10:15am'
+B<Note:> Strings with only time are assumed to be the current day. Example: C<10:15am>
 
 B<Note:> In strings with numeric B<and> textual time zone offsets, the numeric is used. Example:
-'14 Nov 1994 11:34:32 -0500 (EST)'
+C<14 Nov 1994 11:34:32 -0500 (EST)>
 
 =head1 AUTHORS
 

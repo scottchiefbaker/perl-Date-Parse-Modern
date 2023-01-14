@@ -1,6 +1,6 @@
 # NAME
 
-`Date::Parse::Modern` provides string to unixtime conversions
+`Date::Parse::Modern` - Provide string to unixtime conversions
 
 # DESCRIPTION
 
@@ -41,12 +41,12 @@ formats. Common formats like YYYY-MM-DD and HH:II:SS are easily detected and con
 appropriate formats. This allows the date or time to be found anywhere in the string, in (almost) any
 order. In all cases, the day of the week is ignored in the input string.
 
-**Note:** Strings without a year are assumed to be in the current year. Example: 'May 15th, 10:15am'
+**Note:** Strings without a year are assumed to be in the current year. Example: `May 15th, 10:15am`
 
-**Note:** Strings with only time are assumed to be the current day. Example: '10:15am'
+**Note:** Strings with only time are assumed to be the current day. Example: `10:15am`
 
 **Note:** In strings with numeric **and** textual time zone offsets, the numeric is used. Example:
-'14 Nov 1994 11:34:32 -0500 (EST)'
+`14 Nov 1994 11:34:32 -0500 (EST)`
 
 # AUTHORS
 
