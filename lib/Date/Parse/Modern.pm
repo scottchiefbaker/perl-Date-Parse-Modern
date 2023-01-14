@@ -261,7 +261,7 @@ sub strtotime {
 	# or
 	# 11:53 PST (Three or four chars after a time)
 	my $tz_offset_seconds = 0;
-	if ($ret && $str =~ m/(\s([+-])(\d{2})(\d{2})|:\d{2} ([a-zA-Z]{3,4})\b|\d{2}(Z)$)/) {
+	if ($ret && $str =~ m/(\s([+-])(\d{2})(\d{2})|:\d{2} ([A-Z]{1,4})\b|\d{2}(Z)$)/) {
 
 		my $str_offset = 0;
 		if ($5 || $6)  {
