@@ -22,7 +22,8 @@ jobs:
     steps:
       - name: Print out VM timezone information
         run: |
-            timedatectl
+            /usr/bin/date
+            /usr/bin/timedatectl
 
       - uses: actions/checkout@v2
       - name: Regular tests
