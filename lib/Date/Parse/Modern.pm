@@ -59,7 +59,7 @@ our $sep = qr/[\/\\-]/;
 
 =head1 NAME
 
-C<Date::Parse::Modern> provides string to unixtime conversions
+C<Date::Parse::Modern> - Provide string to unixtime conversions
 
 =head1 DESCRIPTION
 
