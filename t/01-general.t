@@ -5,7 +5,14 @@ use warnings;
 use Test::More;
 use Date::Parse::Modern;
 
-ok(!defined(strtotime('foo'))                                   , 'Bogus string');
+ok(!defined(strtotime('foo')), 'Bogus string');
+ok(!defined(strtotime(''))   , 'Empty string');
+
+# This will vary based on a users timezone
+ok(strtotime('1970-01-01')              <  86400, 'Epoch local timezone');
+ok(strtotime('1970-01-01 00:00:00 UTC') == 0    , 'Epoch with time');
+ok(strtotime('1970-01-01 00:00:01 UTC') == 1    , 'Epoch + 1');
+
 ok(strtotime('1979-02-24') == 288691200                         , 'YYYY-MM-DD');
 ok(strtotime('1979/04/16') == 293097600                         , 'YYYY/MM/DD');
 ok(strtotime('Sat May  8 21:24:31 2021') == 1620534271          , 'Human text string');
