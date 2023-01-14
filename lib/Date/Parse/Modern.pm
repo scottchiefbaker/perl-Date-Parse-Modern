@@ -124,6 +124,10 @@ Scott Baker <scott@perturb.org>
 sub strtotime {
 	my ($str, $debug) = @_;
 
+	if (!defined($str)) {
+		return undef;
+	}
+
 	my ($year, $month, $day)    = (0,0,0);
 	my ($hour, $min, $sec, $ms) = (0,0,0,0);
 
