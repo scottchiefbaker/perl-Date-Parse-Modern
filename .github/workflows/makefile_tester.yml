@@ -20,11 +20,6 @@ jobs:
       image: perldocker/perl-tester:${{ matrix.perl-version }}     # https://hub.docker.com/r/perldocker/perl-tester
     name: Perl ${{ matrix.perl-version }}
     steps:
-      - name: Print out VM timezone information
-        run: |
-            /usr/bin/date
-            /usr/bin/timedatectl
-
       - uses: actions/checkout@v2
       - name: Regular tests
         run: |
