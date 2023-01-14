@@ -28,6 +28,7 @@ ok(strtotime('dec/21/93 17:05') == 756522300                    , 'Short form 2'
 ok(strtotime('Dec/21/1993 17:05:00') == 756522300               , 'Short form 3');
 ok(strtotime('10:00:00') >= 1673632800                          , 'Time only');
 ok(strtotime('1994-11-05T13:15:30Z') == 784041330               , 'ISO 8601 T+Z');
+ok(strtotime('2002-07-22 10:00Z') == 1027296000                 , 'ISO 8601 HH:MMZ');
 
 ok(strtotime('Wed, 16 Jun 94 07:29:35 CST') == 771773375          , 'Textual timezone 2');
 ok(strtotime('Mon, 14 Nov 1994 11:34:32 -0500 (EST)') == 784830872, 'Numeric and textual TZ offset');
