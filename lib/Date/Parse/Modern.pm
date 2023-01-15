@@ -296,15 +296,7 @@ sub strtotime {
 
 		# We get the local timezone by creating local time obj and a UTC time obj
 		# and comparing the two
-
-		# If there is a forced TZ_OFFSET (used for testing) use that
-		if (defined($LOCAL_TZ_OFFSET)) {
-			$local_offset = $LOCAL_TZ_OFFSET;
-		# Calculate the diff between this timezone and GMT
-		} else {
-			my @t         = localtime($ret);
-			$local_offset = (Time::Local::timegm(@t) - Time::Local::timelocal(@t));
-		}
+		$local_offset = get_local_offset($ret);
 
 		$tz_offset_seconds = $local_offset;
 		$tz_str = 'No Timezone found';
@@ -322,6 +314,32 @@ sub strtotime {
 		print STDERR $output . "\n";
 	}
 
+
+	return $ret;
+}
+
+sub get_local_offset {
+	my $unixtime = $_[0];
+
+	# If we have a forced LOCAL_TZ_OFFSET we use that (unit tests)
+	if (defined($LOCAL_TZ_OFFSET)) {
+		return $LOCAL_TZ_OFFSET;
+	}
+
+	# Simple memoizing (improves repeated performance a LOT)
+	# Note: this is even faster than `use Memoize`
+	state $x = {};
+	if ($x->{$unixtime}) {
+		return $x->{$unixtime};
+	}
+
+	# Get a time obj for this local timezone and UTC for the Unixtime
+	# Then compare the two to get the local TZ offset
+	my @t   = localtime($unixtime);
+	my $ret = (Time::Local::timegm(@t) - Time::Local::timelocal(@t));
+
+	# Cache the result
+	$x->{$unixtime} = $ret;
 
 	return $ret;
 }
