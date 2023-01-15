@@ -5,6 +5,9 @@ use warnings;
 use Test::More;
 use Date::Parse::Modern;
 
+# All the test times are assuming PST (-0800) so we force that TZ
+$Date::Parse::Modern::LOCAL_TZ_OFFSET = "-28800";
+
 is(strtotime('foo'), undef, 'Bogus string');
 is(strtotime('')   , undef, 'Empty string');
 is(strtotime(undef), undef, 'Undef');
@@ -18,7 +21,7 @@ is(strtotime('1970-01-01 00:00:01 UTC') , 1    , 'Epoch + 1');
 # General tests
 is(strtotime('1979-02-24')                  , 288691200        , 'YYYY-MM-DD');
 is(strtotime('1979/04/16')                  , 293097600        , 'YYYY/MM/DD');
-is(strtotime('Sat May  8 21:24:31 2021')    , 1620534271       , 'Human text string');
+is(strtotime('Sat May  8 21:24:31 2021')    , 1620537871       , 'Human text string');
 is(strtotime('2000-02-29T12:34:56')         , 951856496        , 'ISO 8601');
 is(strtotime('1995-01-24T09:08:17.1823213') , 790967297.1823213, 'ISO 8601 with milliseconds');
 is(strtotime('January 5 2023 12:53 am')     , 1672908780       , 'Textual month name');
@@ -42,7 +45,7 @@ is(strtotime('Thu, 13 Oct 94 10:13:13 +0700')         , 782017993 , 'Numeric tim
 is(strtotime('Thu, 09 Sep 96 11:12:13 -500')          , 842285533 , 'Numeric timezone offset three digits');
 
 # Check the extremes
-is(strtotime('2800-06-06'), 26205836400, 'Way in the future');
-is(strtotime('1800-06-06'), -5351155622, 'Way in the past');
+is(strtotime('2800-06-06'), 26205840000, 'Way in the future');
+is(strtotime('1800-06-06'), -5351155200, 'Way in the past');
 
 done_testing();

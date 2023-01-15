@@ -43,6 +43,8 @@ our $TZ_OFFSET = {
 	'YAPT'  =>  10, 'YEKST' =>   6, 'YEKT'  =>   5, 'Z'     =>   0,
 };
 
+our $LOCAL_TZ_OFFSET = undef;
+
 our $MONTH_MAP = {
 	'jan' => 1, 'feb' => 2, 'mar' => 3, 'apr' => 4 , 'may' => 5 , 'jun' => 6 ,
 	'jul' => 7, 'aug' => 8, 'sep' => 9, 'oct' => 10, 'nov' => 11, 'dec' => 12,
@@ -272,7 +274,6 @@ sub strtotime {
 		if ($5 || $6)  {
 			my $tz_code = $5 || $6 || '';
 
-
 			# Timezone offsets are in hours, so we convert to seconds
 			$str_offset  = $TZ_OFFSET ->{$tz_code} || 0;
 			$str_offset *= 3600;
@@ -291,10 +292,19 @@ sub strtotime {
 		$tz_offset_seconds = $str_offset;
 	# No timezone to account for so we assume the local timezone
 	} elsif ($ret) {
+		my $local_offset = 0;
+
 		# We get the local timezone by creating local time obj and a UTC time obj
 		# and comparing the two
-		my @t            = localtime($ret);
-		my $local_offset = (Time::Local::timegm(@t) - Time::Local::timelocal(@t));
+
+		# If there is a forced TZ_OFFSET (used for testing) use that
+		if (defined($LOCAL_TZ_OFFSET)) {
+			$local_offset = $LOCAL_TZ_OFFSET;
+		# Calculate the diff between this timezone and GMT
+		} else {
+			my @t         = localtime($ret);
+			$local_offset = (Time::Local::timegm(@t) - Time::Local::timelocal(@t));
+		}
 
 		$tz_offset_seconds = $local_offset;
 		$tz_str = 'No Timezone found';
