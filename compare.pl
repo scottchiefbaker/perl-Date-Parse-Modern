@@ -32,11 +32,13 @@ use Date::Parse::Modern;
 my $debug;
 my $benchmark;
 my $string;
+my $indiv;
 
 GetOptions(
-	'debug'     => \$debug,
-	'benchmark' => \$benchmark,
-	'string=s'  => \$string,
+	'debug'      => \$debug,
+	'benchmark'  => \$benchmark,
+	'string=s'   => \$string,
+	'individual' => \$indiv,
 );
 
 my $filter = $ARGV[0] || "";
@@ -75,6 +77,10 @@ if ($string) {
 
 if ($filter) {
 	@times = grep { /$filter/; } @times;
+}
+
+if ($indiv) {
+	benchmark_individual();
 }
 
 if ($benchmark) {
@@ -126,7 +132,7 @@ foreach (@times) {
 
 sub benchmark_individual {
 	foreach my $str (@times) {
-		my $num = 50000;
+		my $num = 100000;
 
 		print "Comparing '$str'\n";
 
