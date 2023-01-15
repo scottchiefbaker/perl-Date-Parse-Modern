@@ -84,16 +84,7 @@ if ($indiv) {
 }
 
 if ($benchmark) {
-	my $num = 10000;
-
-	print "Comparing " . scalar(@times) . " strings\n";
-
-	cmpthese($num, {
-		'Date::Parse::Modern' => sub { foreach(@times) { my $x = Date::Parse::Modern::strtotime($_); }; },
-		'Date::Parse'         => sub { foreach(@times) { my $x = Date::Parse::str2time($_);          }; },
-	});
-
-	exit;
+	benchmark_test_suite();
 }
 
 printf("%38s = %14s = %14s\n", "Input String", "Date::Parse", "D::P::Modern");
@@ -129,6 +120,19 @@ foreach (@times) {
 
 ###############################################################################
 ###############################################################################
+
+sub benchmark_test_suite {
+	my $num = 10000;
+
+	print "Comparing " . scalar(@times) . " strings\n";
+
+	cmpthese($num, {
+		'Date::Parse::Modern' => sub { foreach(@times) { my $x = Date::Parse::Modern::strtotime($_); }; },
+		'Date::Parse'         => sub { foreach(@times) { my $x = Date::Parse::str2time($_);          }; },
+	});
+
+	exit;
+}
 
 sub benchmark_individual {
 	foreach my $str (@times) {
