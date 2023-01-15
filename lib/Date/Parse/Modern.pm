@@ -52,6 +52,9 @@ our $MONTH_MAP = {
 
 our $MONTH_REGEXP = qr/Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December/i;
 
+# Cache repeated lookups for the same TZ offset
+our $USE_TZ_CACHE = 1;
+
 # Separator between dates pieces: '-' or '/' or '\'
 our $sep = qr/[\/\\-]/;
 
@@ -329,7 +332,7 @@ sub get_local_offset {
 	# Simple memoizing (improves repeated performance a LOT)
 	# Note: this is even faster than `use Memoize`
 	state $x = {};
-	if ($x->{$unixtime}) {
+	if ($USE_TZ_CACHE && $x->{$unixtime}) {
 		return $x->{$unixtime};
 	}
 
@@ -339,7 +342,9 @@ sub get_local_offset {
 	my $ret = (Time::Local::timegm(@t) - Time::Local::timelocal(@t));
 
 	# Cache the result
-	$x->{$unixtime} = $ret;
+	if ($USE_TZ_CACHE) {
+		$x->{$unixtime} = $ret;
+	}
 
 	return $ret;
 }
