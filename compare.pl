@@ -30,15 +30,14 @@ use Date::Parse qw(str2time);
 use Date::Parse::Modern;
 
 my $debug;
-my $benchmark;
 my $string;
-my $indiv;
+my @test_strings = get_test_strings();
 
 GetOptions(
 	'debug'      => \$debug,
-	'benchmark'  => \$benchmark,
 	'string=s'   => \$string,
-	'individual' => \$indiv,
+	'individual' => sub { benchmark_individual(@test_strings); },
+	'benchmark'  => sub { benchmark_test_suite(@test_strings); },
 );
 
 my $filter = $ARGV[0] || "";
@@ -46,49 +45,16 @@ my $filter = $ARGV[0] || "";
 ###############################################################################
 ###############################################################################
 
-my @times = (
-	"1979-02-24",
-	"1979-10-06",
-	"1979/04/16",
-	"Sat May  8 21:24:31 2021",
-	"2000-02-29T12:34:56",
-	'1994-11-05T13:15:30Z',
-	"May  4 01:04:16",
-	"1995-01-24T09:08:17.1823213",
-	"Thu, 13 Oct 94 10:13:13 +0700",
-	"Wed, 16 Jun 94 07:29:35 CST",
-	"January 5 2023 12:53 am",
-	"January 9 2019 12:53 pm",
-	"Mon May 10 11:09:36 MDT 2021",
-	'Mon, 14 Nov 1994 11:34:32 -0500 (EST)',
-	'Jul 22 10:00:00 UTC 2002',
-	'21/dec/93 17:05',
-	'dec/21/93 17:05',
-	'Dec/21/1993 17:05:00',
-	'10:00:00',
-	'12-24-1999',
-	'02-24-1979',
-	#'21/dec 17:05', # Not supported... and I don't think I care
-);
-
 if ($string) {
-	@times = ($string);
+	@test_strings = ($string);
 }
 
 if ($filter) {
-	@times = grep { /$filter/; } @times;
-}
-
-if ($indiv) {
-	benchmark_individual();
-}
-
-if ($benchmark) {
-	benchmark_test_suite();
+	@test_strings = grep { /$filter/; } @test_strings;
 }
 
 printf("%38s = %14s = %14s\n", "Input String", "Date::Parse", "D::P::Modern");
-foreach (@times) {
+foreach (@test_strings) {
 	my $x = Date::Parse::str2time($_) // 0;
 	my $y = strtotime($_, $debug)     // 0;
 
@@ -122,7 +88,8 @@ foreach (@times) {
 ###############################################################################
 
 sub benchmark_test_suite {
-	my $num = 10000;
+	my @times = @_;
+	my $num   = 10000;
 
 	print "Comparing " . scalar(@times) . " strings\n";
 
@@ -135,6 +102,8 @@ sub benchmark_test_suite {
 }
 
 sub benchmark_individual {
+	my @times = @_;
+
 	foreach my $str (@times) {
 		my $num = 100000;
 
@@ -187,6 +156,35 @@ sub color {
 	if (defined($bc)) { $ret .= "\e[48;5;${bc}m"; }
 
 	return $ret;
+}
+
+sub get_test_strings {
+	my @times = (
+		"1979-02-24",
+		"1979-10-06",
+		"1979/04/16",
+		"Sat May  8 21:24:31 2021",
+		"2000-02-29T12:34:56",
+		'1994-11-05T13:15:30Z',
+		"May  4 01:04:16",
+		"1995-01-24T09:08:17.1823213",
+		"Thu, 13 Oct 94 10:13:13 +0700",
+		"Wed, 16 Jun 94 07:29:35 CST",
+		"January 5 2023 12:53 am",
+		"January 9 2019 12:53 pm",
+		"Mon May 10 11:09:36 MDT 2021",
+		'Mon, 14 Nov 1994 11:34:32 -0500 (EST)',
+		'Jul 22 10:00:00 UTC 2002',
+		'21/dec/93 17:05',
+		'dec/21/93 17:05',
+		'Dec/21/1993 17:05:00',
+		'10:00:00',
+		'12-24-1999',
+		'02-24-1979',
+		#'21/dec 17:05', # Not supported... and I don't think I care
+	);
+
+	return @times;
 }
 
 # Debug print variable using either Data::Dump::Color (preferred) or Data::Dumper
