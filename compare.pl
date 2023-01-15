@@ -19,7 +19,7 @@
 
 use strict;
 use warnings;
-use v5.16;
+use v5.10;
 use Getopt::Long;
 
 use Benchmark qw(cmpthese);

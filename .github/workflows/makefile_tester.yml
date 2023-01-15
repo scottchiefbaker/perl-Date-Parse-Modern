@@ -13,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         perl-version:
-          #- '5.30'
-          #- '5.32'
+          - '5.10'
+          - '5.22'
           - 'latest'
     container:
       image: perldocker/perl-tester:${{ matrix.perl-version }}     # https://hub.docker.com/r/perldocker/perl-tester
