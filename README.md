@@ -25,13 +25,13 @@ affect performance of the more common strings.
 
     use Date::Parse::Modern;
 
+`Date::Parse::Modern` exports the `strtotime()` function automatically.
+
 # FUNCTIONS
 
 ## strtotime($string)
 
     my $unixtime = strtotime('1979-02-24'); # 288691200
-
-`Date::Parse::Modern` exports the `strtotime()` function automatically.
 
 Simply feed `strtotime()` a string with some type of date or time in it, and it will return an
 integer unixtime. If the string is unparseable, or a weird error occurs, it will return `undef`.

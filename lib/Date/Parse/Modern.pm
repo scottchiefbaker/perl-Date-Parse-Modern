@@ -89,13 +89,13 @@ affect performance of the more common strings.
 
   use Date::Parse::Modern;
 
+C<Date::Parse::Modern> exports the C<strtotime()> function automatically.
+
 =head1 FUNCTIONS
 
 =head2 strtotime($string)
 
   my $unixtime = strtotime('1979-02-24'); # 288691200
-
-C<Date::Parse::Modern> exports the C<strtotime()> function automatically.
 
 Simply feed C<strtotime()> a string with some type of date or time in it, and it will return an
 integer unixtime. If the string is unparseable, or a weird error occurs, it will return C<undef>.
