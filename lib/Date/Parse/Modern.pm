@@ -366,7 +366,7 @@ Running the entire test suite through both strtotime() (mine) and
 Date::Parse::str2time() via --bench gets the following output:
 
 $ perl -I lib compare.pl --bench
-Comparing 31 strings
+Comparing 21 strings
                       Rate         Date::Parse Date::Parse::Modern
-Date::Parse         1208/s                  --                -26%
-Date::Parse::Modern 1623/s                 34%                  --
+Date::Parse         1757/s                  --                -58%
+Date::Parse::Modern 4167/s                137%                  --
