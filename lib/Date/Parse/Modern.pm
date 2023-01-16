@@ -324,6 +324,13 @@ sub strtotime {
 sub get_local_offset {
 	my $unixtime = $_[0];
 
+	# Since timezones only change on the half-hour (at most), we
+	# round down the nearest half hour "bucket" and then cache
+	# that result. We probably could get away with a full hour
+	# here but we don't gain much performance/memory by doing that
+	my $bucket_size = 1800;
+	my $cache_key   = $unixtime - ($unixtime % $bucket_size);
+
 	# If we have a forced LOCAL_TZ_OFFSET we use that (unit tests)
 	if (defined($LOCAL_TZ_OFFSET)) {
 		return $LOCAL_TZ_OFFSET;
@@ -332,8 +339,8 @@ sub get_local_offset {
 	# Simple memoizing (improves repeated performance a LOT)
 	# Note: this is even faster than `use Memoize`
 	state $x = {};
-	if ($USE_TZ_CACHE && $x->{$unixtime}) {
-		return $x->{$unixtime};
+	if ($USE_TZ_CACHE && $x->{$cache_key}) {
+		return $x->{$cache_key};
 	}
 
 	# Get a time obj for this local timezone and UTC for the Unixtime
@@ -343,7 +350,7 @@ sub get_local_offset {
 
 	# Cache the result
 	if ($USE_TZ_CACHE) {
-		$x->{$unixtime} = $ret;
+		$x->{$cache_key} = $ret;
 	}
 
 	return $ret;
