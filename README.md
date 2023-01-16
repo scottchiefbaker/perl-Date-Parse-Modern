@@ -6,20 +6,8 @@
 
 `Date::Parse::Modern` provides a single function `strtotime()` which takes a textual datetime string
 and returns a unixtime. Initial tests shows that `Date::Parse::Modern` is about 40% faster than
-`Date::Parse`. Part of this speed increase may be due to the fact that we don't support as many
-"unique" string formats.
-
-Care was given to support the most modern style strings that you would commonly run in to in log
-files or on the internet. Some "weird" examples that `Date::Parse` supports but `Date::Parse::Modern`
-does **not** would be:
-
-    21 dec 17:05
-    2000 10:02:18 "GMT"
-    20020722T100000Z
-    2002-07-22 10:00 Z
-
-Corner cases like this were purposely not implemented because they're not commonly used and it would
-affect performance of the more common strings.
+`Date::Parse`. Care was given to support the most modern style strings that you would commonly find
+in log files or on the internet.
 
 # USAGE
 
@@ -43,12 +31,27 @@ order. In all cases, the day of the week is ignored in the input string.
 
 **Note:** Strings without a year are assumed to be in the current year. Example: `May 15th, 10:15am`
 
-**Note:** Strings with only a date are assumed to be at the midnight. Example: `2023-01-15`
+**Note:** Strings with only a date are assumed to occur at the midnight. Example: `2023-01-15`
 
 **Note:** Strings with only time are assumed to be the current day. Example: `10:15am`
 
 **Note:** In strings with numeric **and** textual time zone offsets, the numeric is used. Example:
 `14 Nov 1994 11:34:32 -0500 (EST)`
+
+# Caveats and comparisons
+
+`Date::Parse::Modern` is significantly faster than `Date::Parse` in most cases. Part of this
+speed increase may be due to the fact that we do not support as many "unique" string formats.
+Some "weird" examples that `Date::Parse` supports but `Date::Parse::Modern`
+does **not** would be:
+
+    21 dec 17:05        # No year
+    2000 10:02:18 "GMT" # No month/day
+    20020722T100000Z    # All run together
+    2002-07-22 10:00 Z  # No seconds
+
+Corner cases like this were purposely not implemented because they're not commonly used and it would
+affect performance of the more common strings.
 
 # AUTHORS
 
