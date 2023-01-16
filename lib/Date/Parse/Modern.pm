@@ -11,7 +11,7 @@ use Time::Local;
 use Exporter 'import';
 our @EXPORT = ('strtotime');
 
-our $VERSION = 0.2;
+our $VERSION = 0.3;
 
 # If we use state the variables doesn't get instantiated EVERY time and it's much faster
 # https://timezonedb.com/download
