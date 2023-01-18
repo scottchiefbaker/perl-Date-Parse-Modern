@@ -68,10 +68,9 @@ C<Date::Parse::Modern> - Provide string to unixtime conversions
 
 =head1 DESCRIPTION
 
-C<Date::Parse::Modern> provides a single function C<strtotime()> which takes a textual datetime string
-and returns a unixtime. Initial tests shows that C<Date::Parse::Modern> is about 40% faster than
-C<Date::Parse>. Care was given to support the most modern style strings that you would commonly find
-in log files or on the internet.
+C<Date::Parse::Modern> provides a single function C<strtotime()> which takes a datetime string
+and returns a unixtime.  Care was given to support the most modern style strings that you would
+commonly find in log files or on the internet.
 
 =head1 USAGE
 
@@ -88,7 +87,7 @@ C<Date::Parse::Modern> exports the C<strtotime()> function automatically.
 Simply feed C<strtotime()> a string with some type of date or time in it, and it will return an
 integer unixtime. If the string is unparseable, or a weird error occurs, it will return C<undef>.
 
-All the "magic" in C<Date::Parse::Modern> is done using regular expressions that look for common datetime
+All the "magic" in C<strtotime()> is done using regular expressions that look for common datetime
 formats. Common formats like YYYY-MM-DD and HH:II:SS are easily detected and converted to the
 appropriate formats. This allows the date or time to be found anywhere in the string, in (almost) any
 order. In all cases, the day of the week is ignored in the input string.
@@ -104,7 +103,7 @@ C<14 Nov 1994 11:34:32 -0500 (EST)>
 
 =head1 Caveats and comparisons
 
-C<Date::Parse::Modern> is significantly faster than C<Date::Parse> in most cases. Part of this
+C<Date::Parse::Modern> is B<significantly> faster than C<Date::Parse> in most cases. Part of this
 speed increase may be due to the fact that we do not support as many "unique" string formats.
 Some "weird" examples that C<Date::Parse> supports but C<Date::Parse::Modern>
 does B<not> would be:

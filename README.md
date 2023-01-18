@@ -4,10 +4,9 @@
 
 # DESCRIPTION
 
-`Date::Parse::Modern` provides a single function `strtotime()` which takes a textual datetime string
-and returns a unixtime. Initial tests shows that `Date::Parse::Modern` is about 40% faster than
-`Date::Parse`. Care was given to support the most modern style strings that you would commonly find
-in log files or on the internet.
+`Date::Parse::Modern` provides a single function `strtotime()` which takes a datetime string
+and returns a unixtime.  Care was given to support the most modern style strings that you would
+commonly find in log files or on the internet.
 
 # USAGE
 
@@ -24,7 +23,7 @@ in log files or on the internet.
 Simply feed `strtotime()` a string with some type of date or time in it, and it will return an
 integer unixtime. If the string is unparseable, or a weird error occurs, it will return `undef`.
 
-All the "magic" in `Date::Parse::Modern` is done using regular expressions that look for common datetime
+All the "magic" in `strtotime()` is done using regular expressions that look for common datetime
 formats. Common formats like YYYY-MM-DD and HH:II:SS are easily detected and converted to the
 appropriate formats. This allows the date or time to be found anywhere in the string, in (almost) any
 order. In all cases, the day of the week is ignored in the input string.
@@ -40,7 +39,7 @@ order. In all cases, the day of the week is ignored in the input string.
 
 # Caveats and comparisons
 
-`Date::Parse::Modern` is significantly faster than `Date::Parse` in most cases. Part of this
+`Date::Parse::Modern` is **significantly** faster than `Date::Parse` in most cases. Part of this
 speed increase may be due to the fact that we do not support as many "unique" string formats.
 Some "weird" examples that `Date::Parse` supports but `Date::Parse::Modern`
 does **not** would be:
