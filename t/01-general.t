@@ -37,12 +37,14 @@ is(strtotime('1994-11-05T13:15:30Z')  , 784041330 , 'ISO 8601 T+Z');
 is(strtotime('2002-07-22 10:00:00 Z') , 1027332000, 'ISO 8601 HH:MM Z');
 
 # Timezone related tests
-is(strtotime('Mon May 10 11:09:36 MDT 2021')          , 1620666576, 'Textual timezone 1');
-is(strtotime('Jul 22 10:00:00 UTC 2002')              , 1027332000, 'UTC timezone');
-is(strtotime('Wed, 16 Jun 94 07:29:35 CST')           , 771773375 , 'Textual timezone 2');
-is(strtotime('Mon, 14 Nov 1994 11:34:32 -0500 (EST)') , 784830872 , 'Numeric and textual TZ offset');
-is(strtotime('Thu, 13 Oct 94 10:13:13 +0700')         , 782017993 , 'Numeric timezone offset four digits');
-is(strtotime('Thu, 09 Sep 96 11:12:13 -500')          , 842285533 , 'Numeric timezone offset three digits');
+is(strtotime('Mon May 10 11:09:36 MDT 2021')          , 1620666576  , 'Textual timezone 1');
+is(strtotime('Jul 22 10:00:00 UTC 2002')              , 1027332000  , 'UTC timezone');
+is(strtotime('Wed, 16 Jun 94 07:29:35 CST')           , 771773375   , 'Textual timezone 2');
+is(strtotime('Mon, 14 Nov 1994 11:34:32 -0500 (EST)') , 784830872   , 'Numeric and textual TZ offset');
+is(strtotime('Thu, 13 Oct 94 10:13:13 +0700')         , 782017993   , 'Numeric timezone offset four digits');
+is(strtotime('Thu, 09 Sep 96 11:12:13 -500')          , 842285533   , 'Numeric timezone offset three digits');
+is(strtotime('Fri Dec 17 00:00:00 1901 GMT')          , -2147212800 , 'Textual timezone after year 1901');
+is(strtotime('Tue Jan 16 23:59:59 2048 GMT')          , 2462831999  , 'Textual timezone after year 2048');
 
 # Check the extremes
 is(strtotime('2800-06-06'), 26205840000, 'Way in the future');

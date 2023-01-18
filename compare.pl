@@ -53,7 +53,7 @@ if ($filter) {
 	@test_strings = grep { /$filter/; } @test_strings;
 }
 
-printf("%38s = %14s = %14s\n", "Input String", "Date::Parse", "D::P::Modern");
+printf("%38s = %15s = %14s\n", "Input String", "Date::Parse", "D::P::Modern");
 foreach (@test_strings) {
 	my $x = Date::Parse::str2time($_) // 0;
 	my $y = strtotime($_, $debug)     // 0;
@@ -76,10 +76,10 @@ foreach (@test_strings) {
 			$diff_str = $diff / 60 . " minutes";
 		}
 
-		printf("%38s = %14.3f = %14.3f (diff: %s)\n", $_, $x, $y, $diff_str);
+		printf("%38s = %15.3f = %14.3f (diff: %s)\n", $_, $x, $y, $diff_str);
 		print color();
 	} else {
-		printf("%38s = %14.3f = %14.3f\n", $_, $x, $y);
+		printf("%38s = %15.3f = %14.3f\n", $_, $x, $y);
 	}
 
 }
@@ -181,6 +181,8 @@ sub get_test_strings {
 		'10:00:00',
 		'12-24-1999',
 		'02-24-1979',
+		'Fri Dec 17 00:00:00 1901 GMT',
+		'Tue Jan 16 23:59:59 2048 GMT',
 		#'21/dec 17:05', # Not supported... and I don't think I care
 	);
 
