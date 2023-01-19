@@ -111,7 +111,7 @@ Please submit bugs and feature requests on Github:
 
 =head1 AUTHORS
 
-Scott Baker <scott@perturb.org>
+Scott Baker - https://www.perturb.org/
 
 =cut
 

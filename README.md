@@ -37,21 +37,12 @@ order. In all cases, the day of the week is ignored in the input string.
 **Note:** In strings with numeric **and** textual time zone offsets, the numeric is used. Example:
 `14 Nov 1994 11:34:32 -0500 (EST)`
 
-# Caveats and comparisons
+# Bugs/Features
 
-`Date::Parse::Modern` is **significantly** faster than `Date::Parse` in most cases. Part of this
-speed increase may be due to the fact that we do not support as many "unique" string formats.
-Some "weird" examples that `Date::Parse` supports but `Date::Parse::Modern`
-does **not** would be:
+Please submit bugs and feature requests on Github:
 
-    21 dec 17:05        # No year
-    2000 10:02:18 "GMT" # No month/day
-    20020722T100000Z    # All run together
-    2002-07-22 10:00 Z  # No seconds
-
-Corner cases like this were purposely not implemented because they're not commonly used and it would
-affect performance of the more common strings.
+    https://github.com/scottchiefbaker/perl-Date-Parse-Modern
 
 # AUTHORS
 
-Scott Baker <scott@perturb.org>
+Scott Baker - https://www.perturb.org/
