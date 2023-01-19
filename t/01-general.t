@@ -24,6 +24,7 @@ is(strtotime('1979/04/16')                  , 293097600        , 'YYYY/MM/DD');
 is(strtotime('Sat May  8 21:24:31 2021')    , 1620537871       , 'Human text string');
 is(strtotime('2000-02-29T12:34:56')         , 951856496        , 'ISO 8601');
 is(strtotime('1995-01-24T09:08:17.1823213') , 790967297.1823213, 'ISO 8601 with milliseconds');
+is(strtotime('20020722T100000Z')            , 1027332000       , 'ISO 8601 all run together');
 is(strtotime('January 5 2023 12:53 am')     , 1672908780       , 'Textual month name');
 is(strtotime('January 9 2019 12:53 pm')     , 1547067180       , 'Textual month name with PM');
 is(strtotime('21/dec/93 17:05')             , 756522300        , 'Short form 1');

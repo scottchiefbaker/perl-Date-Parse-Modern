@@ -195,6 +195,7 @@ sub get_test_strings {
 		'02-24-1979',
 		'Fri Dec 17 00:00:00 1901 GMT',
 		'Tue Jan 16 23:59:59 2048 GMT',
+		'20020722T100000Z',
 		#'21/dec 17:05', # Not supported... and I don't think I care
 	);
 
