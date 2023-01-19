@@ -11,9 +11,10 @@ use Time::Local;
 use Exporter 'import';
 our @EXPORT = ('strtotime');
 
+###############################################################################
+
 our $VERSION = 0.3;
 
-# If we use state the variables doesn't get instantiated EVERY time and it's much faster
 # https://timezonedb.com/download
 our $TZ_OFFSET = {
 	'ACDT'  =>  10, 'ACST'  =>   9, 'ACT'   =>  -5, 'ACWST' =>   8, 'ADT'   =>  -3, 'AEDT'  =>  11, 'AEST'  =>  10, 'AFT'   =>   4,
@@ -43,12 +44,13 @@ our $TZ_OFFSET = {
 	'YAPT'  =>  10, 'YEKST' =>   6, 'YEKT'  =>   5, 'Z'     =>   0,
 };
 
-our $LOCAL_TZ_OFFSET = undef;
-
 our $MONTH_MAP = {
 	'jan' => 1, 'feb' => 2, 'mar' => 3, 'apr' => 4 , 'may' => 5 , 'jun' => 6 ,
 	'jul' => 7, 'aug' => 8, 'sep' => 9, 'oct' => 10, 'nov' => 11, 'dec' => 12,
 };
+
+# Force a local timezone offset (used for unit tests)
+our $LOCAL_TZ_OFFSET = undef;
 
 our $MONTH_REGEXP = qr/Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December/i;
 
@@ -58,9 +60,9 @@ our $USE_TZ_CACHE = 1;
 # Separator between dates pieces: '-' or '/' or '\'
 our $sep = qr/[\/\\-]/;
 
-######################################################################################################
-######################################################################################################
-######################################################################################################
+###############################################################################
+###############################################################################
+###############################################################################
 
 =head1 NAME
 
@@ -122,9 +124,9 @@ Scott Baker <scott@perturb.org>
 
 =cut
 
-######################################################################################################
-######################################################################################################
-######################################################################################################
+###############################################################################
+###############################################################################
+###############################################################################
 
 # The logic here is that we use regular expressions to pull out various patterns
 # YYYY/MM/DD, H:I:S, DD MonthWord YYYY
@@ -135,11 +137,11 @@ sub strtotime {
 		return undef;
 	}
 
-	my ($year, $month, $day)    = (0,0,0);
-	my ($hour, $min, $sec, $ms) = (0,0,0,0);
+	my ($year, $month, $day) = (0, 0, 0);
+	my ($hour, $min  , $sec) = (0, 0, 0);
 
-	####################################################################################################
-	####################################################################################################
+	###########################################################################
+	###########################################################################
 
 	# First we look to see if we have anything that mathches YYYY-MM-DD (numerically)
 	if ($str =~ m/\b((\d{4})$sep(\d{2})$sep(\d{2})|(\d{2})$sep(\d{2})$sep(\d{4}))/) {
@@ -163,12 +165,12 @@ sub strtotime {
 		}
 	}
 
-	# The year may be on the end of the string like: Sat May  8 21:24:31 2021
+	# The year may be on the end of the string: Sat May  8 21:24:31 2021
 	if (!$year) {
 		($year) = $str =~ m/\s(\d{4})\b/;
 	}
 
-	####################################################################################################
+	###########################################################################
 
 	# Next we look for alpha months followed by a digit if we didn't find a numeric month above
 	# This will find: "April 13" and also "13 April 1995"
@@ -182,6 +184,7 @@ sub strtotime {
 		if ($1) {
 			$day  = int($1);
 			$year = int($3);
+		# April 13 or April 13 94
 		} else {
 			$day = int($3);
 
@@ -190,16 +193,17 @@ sub strtotime {
 		}
 	}
 
-	####################################################################################################
+	###########################################################################
 
-	# Alternate date string like like: 21/dec/93 or dec/21/93 (much less common) not sure if it's worth supporting this)
+	# Alternate date string like like: 21/dec/93 or dec/21/93 (much less common) not sure if it's worth supporting this
 	if (!$month && $str =~ /(.*)($MONTH_REGEXP)(.*)/) {
 		my $before = $1;
 		my $after  = $3;
 
-		$month = $MONTH_MAP->{lc($2)};
+		# Lookup the numeric month based on the string name
+		$month = $MONTH_MAP->{lc($2)} || 0;
 
-		# Month starts string: dec/21/93
+		# Month starts string: dec/21/93 or feb/14/1999
 		if ($before eq "") {
 			$after =~ m/(\d{2})$sep(\d{2,4})/;
 
@@ -208,15 +212,15 @@ sub strtotime {
 
 		# Month in the middle: 21/dec/93
 		} elsif ($before && $after) {
-			$before =~ s/(\d+)\D/$1/g;
-			$after  =~ s/\D(\d{2,4}).*/$1/g;
+			$before =~ s/(\d+)\D/$1/g;       # Only leave the digits
+			$after  =~ s/\D(\d{2,4}).*/$1/g; # Only leave the digits
 
 			$day  = $before;
 			$year = $after;
 		}
 	}
 
-	####################################################################################################
+	###########################################################################
 
 	# Now we look for times: 10:14, 10:14:17, 08:15pm
 	if ($str =~ m/(\b|T)(\d{1,2}):(\d{1,2}):?(\d{2}(Z|\.\d+)?)?( ?am|pm|AM|PM)?\b/) {
@@ -226,6 +230,7 @@ sub strtotime {
 
 		$sec =~ s/Z$//;
 
+		# The string of AM or PM
 		my $ampm = lc($6 || "");
 
 		# PM means add 12 hours
@@ -239,11 +244,12 @@ sub strtotime {
 		}
 	}
 
-	my $has_time = ($hour || $min || $sec);
+	# Just some basic sanity checking
+	my $has_time = ($hour || $min   || $sec);
 	my $has_date = ($year || $month || $day);
 
 	if (!$has_time && !$has_date) {
-		# 20020722T100000Z
+		# One final check if NOTHING else has matched, we lookup a weird format: 20020722T100000Z
 		if ($str =~ m/(\d{4})(\d{2})(\d{2})T(\d\d)(\d\d)(\d\d)Z/) {
 			$year  = $1;
 			$month = $2;
@@ -257,8 +263,8 @@ sub strtotime {
 		}
 	}
 
-	####################################################################################################
-	####################################################################################################
+	###########################################################################
+	###########################################################################
 
 	# Sanity check some basic boundaries
 	# I don't think we need this any more since we eval() and timegm_modern() will barf and return undef
@@ -285,43 +291,46 @@ sub strtotime {
 	# If we find a timezone offset we take that in to account now
 	# Either: +1000 or -0700
 	# or
-	# 11:53 PST (Three or four chars after a time)
+	# 11:53 PST (One to four chars after a time)
 	my $tz_offset_seconds = 0;
 	my $tz_str = '';
 	if ($ret && $str =~ m/(\s([+-])(\d{1,2})(\d{2})|\d{2} ([A-Z]{1,4})\b|\d{2}(Z)$)/) {
-
 		my $str_offset = 0;
+
+		# String timezone: 11:53 PST
 		if ($5 || $6)  {
+			# Whichever form matches, the TZ is that one
 			my $tz_code = $5 || $6 || '';
 
+			# Lookup the timezone offset in the table
+			$str_offset  = $TZ_OFFSET->{$tz_code} || 0;
 			# Timezone offsets are in hours, so we convert to seconds
-			$str_offset  = $TZ_OFFSET ->{$tz_code} || 0;
 			$str_offset *= 3600;
 
-			#k("$tz_code = $str_offset");
 			$tz_str = $tz_code;
+		# Numeric format: +1000 or -0700
 		} else {
 			# Break the input string into parts so we can do math
+			# +1000 = 10 hours, -0700 = 7 hours, +0430 = 4.5 hours
 			$str_offset = ($3 + ($4 / 60)) * 3600;
+
 			if ($2 eq "-") {
 				$str_offset *= -1;
 			}
+
 			$tz_str = "$2$3$4";
 		}
 
 		$tz_offset_seconds = $str_offset;
-	# No timezone to account for so we assume the local timezone
+	# No timezone info found so we assume the local timezone
 	} elsif ($ret) {
-		my $local_offset = 0;
-
-		# We get the local timezone by creating local time obj and a UTC time obj
-		# and comparing the two
-		$local_offset = get_local_offset($ret);
+		my $local_offset = get_local_offset($ret);
 
 		$tz_offset_seconds = $local_offset;
-		$tz_str = 'No Timezone found';
+		$tz_str            = 'UNSPECIFIED';
 	}
 
+	# Subtract the timezone offset from the unixtime
 	$ret -= $tz_offset_seconds;
 
 	if ($debug) {
@@ -338,6 +347,7 @@ sub strtotime {
 	return $ret;
 }
 
+# Return the timezone offset for the local machine
 sub get_local_offset {
 	my $unixtime = $_[0];
 
