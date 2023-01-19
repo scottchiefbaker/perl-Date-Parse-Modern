@@ -243,7 +243,18 @@ sub strtotime {
 	my $has_date = ($year || $month || $day);
 
 	if (!$has_time && !$has_date) {
-		return undef;
+		# 20020722T100000Z
+		if ($str =~ m/(\d{4})(\d{2})(\d{2})T(\d\d)(\d\d)(\d\d)Z/) {
+			$year  = $1;
+			$month = $2;
+			$day   = $3;
+
+			$hour = $4;
+			$min  = $5;
+			$sec  = $6;
+		} else {
+			return undef;
+		}
 	}
 
 	####################################################################################################
