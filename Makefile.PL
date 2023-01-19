@@ -5,7 +5,7 @@ use ExtUtils::MakeMaker;
 
 my %WriteMakefileArgs = (
     NAME             => 'Date::Parse::Modern',
-    AUTHOR           => q{Scott Baker <scott@perturb.org>},
+    AUTHOR           => 'Scott Baker <bakerscot@cpan.org>',
     VERSION_FROM     => 'lib/Date/Parse/Modern.pm',
     ABSTRACT_FROM    => 'lib/Date/Parse/Modern.pm',
     LICENSE          => 'mit',
