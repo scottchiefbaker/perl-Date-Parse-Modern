@@ -174,7 +174,7 @@ sub strtotime {
 
 	# Next we look for alpha months followed by a digit if we didn't find a numeric month above
 	# This will find: "April 13" and also "13 April 1995"
-	if (!$month && $str =~ m/(\d{1,2})?\s*($MONTH_REGEXP)\s+(\d{1,4})( (\d+?) )?/) {
+	if (!$month && $str =~ m/(\d{1,2})?\s*($MONTH_REGEXP)\s+(\d{1,4})[\s\$]((\d+?) )?/) {
 
 		# Get the numerical number for this month
 		my $month_name = lc(substr($2,0,3));
@@ -195,7 +195,7 @@ sub strtotime {
 
 	###########################################################################
 
-	# Alternate date string like like: 21/dec/93 or dec/21/93 (much less common) not sure if it's worth supporting this
+	# Alternate date string like like: 21/dec/93 or dec/21/93 much less common
 	if (!$month && $str =~ /(.*)($MONTH_REGEXP)(.*)/) {
 		my $before = $1;
 		my $after  = $3;
@@ -212,11 +212,15 @@ sub strtotime {
 
 		# Month in the middle: 21/dec/93
 		} elsif ($before && $after) {
-			$before =~ s/(\d+)\D/$1/g;       # Only leave the digits
-			$after  =~ s/\D(\d{2,4}).*/$1/g; # Only leave the digits
+			$before =~ m/(\d+)\D/; # Just the digits
+			$day    = $1 || 0;
 
-			$day  = $before;
-			$year = $after;
+            $after  =~ m/\D(\d{2,4})(.)/; # Get the digits AFTER the separator
+
+            # If it's not a time (has a colon) it's the year
+            if ($2 ne ":") {
+                $year = $1;
+            }
 		}
 	}
 
