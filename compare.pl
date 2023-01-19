@@ -241,16 +241,3 @@ BEGIN {
 		exit(15);
 	}
 }
-
-__END__
-
-Performance varies depending on string input
-
-Running the entire test suite through both strtotime() (mine) and
-Date::Parse::str2time() via --bench gets the following output:
-
-$ perl baker-strtotime.pl --bench
-Comparing 24 strings
-              Rate Date::Parse       Scott
-Date::Parse 1562/s          --        -31%
-Scott       2257/s         44%          --
