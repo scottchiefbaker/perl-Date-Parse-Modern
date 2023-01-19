@@ -103,20 +103,11 @@ B<Note:> Strings with only time are assumed to be the current day. Example: C<10
 B<Note:> In strings with numeric B<and> textual time zone offsets, the numeric is used. Example:
 C<14 Nov 1994 11:34:32 -0500 (EST)>
 
-=head1 Caveats and comparisons
+=head1 Bugs/Features
 
-C<Date::Parse::Modern> is B<significantly> faster than C<Date::Parse> in most cases. Part of this
-speed increase may be due to the fact that we do not support as many "unique" string formats.
-Some "weird" examples that C<Date::Parse> supports but C<Date::Parse::Modern>
-does B<not> would be:
+Please submit bugs and feature requests on Github:
 
-  21 dec 17:05        # No year
-  2000 10:02:18 "GMT" # No month/day
-  20020722T100000Z    # All run together
-  2002-07-22 10:00 Z  # No seconds
-
-Corner cases like this were purposely not implemented because they're not commonly used and it would
-affect performance of the more common strings.
+  https://github.com/scottchiefbaker/perl-Date-Parse-Modern
 
 =head1 AUTHORS
 
