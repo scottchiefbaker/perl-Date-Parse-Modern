@@ -65,7 +65,16 @@ foreach (@test_strings) {
 	my $y = strtotime($_, $debug)     // 0;
 
 	if ($x != $y) {
-		print color('orange');
+		# If there is nothing from Date::Parse but we have an answer
+		if (!$x && $y) {
+			print color(117);
+		# Date::Parse has an answer but we don't
+		} elsif ($x && !$y) {
+			print color('red');
+		# We disagree on what the answer is
+		} else {
+			print color('orange');
+		}
 
 		my $diff     = $y - $x;
 		my $diff_str = '';
