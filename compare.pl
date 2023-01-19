@@ -79,16 +79,16 @@ foreach (@test_strings) {
 		my $diff     = $y - $x;
 		my $diff_str = '';
 
-		if ($diff >= (3600 * 24 * 365)) {
-			$diff_str = ($diff / (3600 * 24 * 365)) . " years";
-		} elsif ($diff >= (3600 * 24 * 30)) {
-			$diff_str = ($diff / (3600 * 24 * 30)) . " months";
-		} elsif ($diff >= (3600 * 24)) {
-			$diff_str = ($diff / (3600 * 24)) . " days";
-		} elsif ($diff >= (3600)) {
-			$diff_str = $diff / 3600 . " hours";
+		if (abs($diff) >= (3600 * 24 * 365)) {
+			$diff_str = sprintf("%.2f years", ($diff / (3600 * 24 * 365)));
+		} elsif (abs($diff) >= (3600 * 24 * 30)) {
+			$diff_str = sprintf("%.2f months", ($diff / (3600 * 24 * 30)));
+		} elsif (abs($diff) >= (3600 * 24)) {
+			$diff_str = sprintf("%.2f days", ($diff / (3600 * 24)));
+		} elsif (abs($diff) >= (3600)) {
+			$diff_str = sprintf("%.2f hours", $diff / 3600);
 		} else {
-			$diff_str = $diff / 60 . " minutes";
+			$diff_str = sprintf("%.2f minutes", $diff / 60);
 		}
 
 		printf("%38s = %15.3f = %15.3f (diff: %s)\n", $_, $x, $y, $diff_str);
