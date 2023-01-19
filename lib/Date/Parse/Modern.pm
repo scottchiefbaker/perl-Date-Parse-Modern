@@ -261,9 +261,10 @@ sub strtotime {
 	####################################################################################################
 
 	# Sanity check some basic boundaries
-	if ($month > 12 || $day > 31 || $hour > 23 || $min > 60 || $sec > 61) {
-		return undef;
-	}
+	# I don't think we need this any more since we eval() and timegm_modern() will barf and return undef
+	#if ($month > 12 || $day > 31 || $hour > 23 || $min > 60 || $sec > 61) {
+	#    return undef;
+	#}
 
 	$month ||= (localtime())[4] + 1; # If there is no month, we assume the current month
 	$day   ||= (localtime())[3];     # If there is no day, we assume the current day
