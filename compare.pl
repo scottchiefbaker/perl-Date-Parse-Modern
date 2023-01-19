@@ -31,6 +31,7 @@ use Date::Parse::Modern;
 
 my $debug;
 my $string;
+my $file;
 my @test_strings = get_test_strings();
 
 GetOptions(
@@ -38,6 +39,7 @@ GetOptions(
 	'string=s'   => \$string,
 	'individual' => sub { benchmark_individual(@test_strings); },
 	'benchmark'  => sub { benchmark_test_suite(@test_strings); },
+	'file=s'     => \$file,
 );
 
 my $filter = $ARGV[0] || "";
@@ -47,6 +49,10 @@ my $filter = $ARGV[0] || "";
 
 if ($string) {
 	@test_strings = ($string);
+}
+
+if ($file && -r $file) {
+	@test_strings = load_strings_from_file($file);
 }
 
 if ($filter) {
@@ -132,9 +138,6 @@ sub trim {
 sub color {
 	my $str = shift();
 
-	# If we're NOT connected to a an interactive terminal don't do color
-	if (-t STDOUT == 0) { return ''; }
-
 	# No string sent in, so we just reset
 	if (!length($str) || $str eq 'reset') { return "\e[0m"; }
 
@@ -187,6 +190,28 @@ sub get_test_strings {
 	);
 
 	return @times;
+}
+
+sub load_strings_from_file {
+	my $file = shift();
+
+	open (my $fh, "<", $file);
+
+	my @ret;
+	while (my $line = readline($fh)) {
+		chomp($line);
+
+		if (substr($line, 0, 1) eq "#") {
+			print "Skipping $line\n";
+			next;
+		}
+
+		if ($line) {
+			push(@ret, $line);
+		}
+	}
+
+	return @ret;
 }
 
 # Debug print variable using either Data::Dump::Color (preferred) or Data::Dumper
