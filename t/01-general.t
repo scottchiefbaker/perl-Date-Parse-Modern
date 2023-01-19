@@ -36,6 +36,7 @@ cmp_ok(strtotime('10:00:00')                , '>=', 1673632800 , 'Time only');
 # Zulu timezone tests
 is(strtotime('1994-11-05T13:15:30Z')  , 784041330 , 'ISO 8601 T+Z');
 is(strtotime('2002-07-22 10:00:00 Z') , 1027332000, 'ISO 8601 HH:MM Z');
+is(strtotime('2002-07-22 10:00Z')     , 1027332000, 'ISO 8601 HH:MMZ');
 
 # Timezone related tests
 is(strtotime('Mon May 10 11:09:36 MDT 2021')          , 1620666576  , 'Textual timezone 1');
