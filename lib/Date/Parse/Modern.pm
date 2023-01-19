@@ -172,7 +172,7 @@ sub strtotime {
 
 	# Next we look for alpha months followed by a digit if we didn't find a numeric month above
 	# This will find: "April 13" and also "13 April 1995"
-	if (!$month && $str =~ m/(\d{1,2})?\s*($MONTH_REGEXP)\s+(\d{1,4})/) {
+	if (!$month && $str =~ m/(\d{1,2})?\s*($MONTH_REGEXP)\s+(\d{1,4})( (\d+?) )?/) {
 
 		# Get the numerical number for this month
 		my $month_name = lc(substr($2,0,3));
@@ -184,6 +184,9 @@ sub strtotime {
 			$year = int($3);
 		} else {
 			$day = int($3);
+
+			# *IF* there is a $5 it's a year
+			$year ||= int($5 || 0);
 		}
 	}
 
