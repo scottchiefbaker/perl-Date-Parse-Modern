@@ -223,7 +223,7 @@ sub strtotime {
 	###########################################################################
 
 	# Now we look for times: 10:14, 10:14:17, 08:15pm
-	if ($str =~ m/(\b|T)(\d{1,2}):(\d{1,2}):?(\d{2}(Z|\.\d+)?)?( ?am|pm|AM|PM)?\b/) {
+	if ($str =~ m/(\b|T)(\d{1,2}):(\d{1,2}):?(\d{2}(Z|\.\d+)?)?( ?am|pm|AM|PM)?/) {
 		$hour = int($2);
 		$min  = int($3);
 		$sec  = $4 || 0; # Not int() cuz it might be float for milliseconds
