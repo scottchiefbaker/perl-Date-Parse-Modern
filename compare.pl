@@ -67,7 +67,7 @@ foreach (@test_strings) {
 	if ($x != $y) {
 		# If there is nothing from Date::Parse but we have an answer
 		if (!$x && $y) {
-			print color(117);
+			print color(82);
 		# Date::Parse has an answer but we don't
 		} elsif ($x && !$y) {
 			print color('red');
@@ -212,7 +212,7 @@ sub load_strings_from_file {
 		chomp($line);
 
 		if (substr($line, 0, 1) eq "#") {
-			print "Skipping $line\n";
+			#print "Skipping $line\n";
 			next;
 		}
 
