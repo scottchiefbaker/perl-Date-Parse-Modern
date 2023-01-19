@@ -393,11 +393,11 @@ __END__
 
 Performance varies depending on string input
 
-Running the entire test suite through both strtotime() (mine) and
+Running the entire test suite through both this module and
 Date::Parse::str2time() via --bench gets the following output:
 
 $ perl -I lib compare.pl --bench
-Comparing 21 strings
+Comparing 24 strings
                       Rate         Date::Parse Date::Parse::Modern
-Date::Parse         1757/s                  --                -58%
-Date::Parse::Modern 4167/s                137%                  --
+Date::Parse         1590/s                  --                -57%
+Date::Parse::Modern 3663/s                130%                  --
