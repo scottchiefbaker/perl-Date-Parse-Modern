@@ -392,3 +392,5 @@ Comparing 24 strings
                       Rate         Date::Parse Date::Parse::Modern
 Date::Parse         1590/s                  --                -57%
 Date::Parse::Modern 3663/s                130%                  --
+
+# vim: tabstop=4 shiftwidth=4 autoindent softtabstop=4
