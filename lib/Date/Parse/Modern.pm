@@ -206,12 +206,12 @@ sub strtotime {
 			$before =~ m/(\d+)\D/; # Just the digits
 			$day    = $1 || 0;
 
-            $after  =~ m/\D(\d{2,4})(.)/; # Get the digits AFTER the separator
+			$after  =~ m/\D(\d{2,4})(.)/; # Get the digits AFTER the separator
 
-            # If it's not a time (has a colon) it's the year
-            if ($2 ne ":") {
-                $year = $1;
-            }
+			# If it's not a time (has a colon) it's the year
+			if ($2 ne ":") {
+				$year = $1;
+			}
 		}
 	}
 
