@@ -134,8 +134,15 @@ sub strtotime {
 	###########################################################################
 	###########################################################################
 
+	state $rule_1 = qr/
+		\b
+		((\d{4})$sep(\d{2})$sep(\d{2}) # YYYY-MM-DD
+		|
+		(\d{2})$sep(\d{2})$sep(\d{4})) # DD-MM-YYYY
+	/x;
+
 	# First we look to see if we have anything that mathches YYYY-MM-DD (numerically)
-	if ($str =~ m/\b((\d{4})$sep(\d{2})$sep(\d{2})|(\d{2})$sep(\d{2})$sep(\d{4}))/) {
+	if ($str =~ $rule_1) {
 		# YYYY-MM-DD: 1999-12-24
 		if ($2 || $3) {
 			$year  = $2;
@@ -163,9 +170,19 @@ sub strtotime {
 
 	###########################################################################
 
+	state $rule_2 = qr/
+		(\d{1,2})?       # Maybe some digits before month
+		\s*
+		($MONTH_REGEXP)  # A textual month
+		\s+
+		(\d{1,4})        # Digits
+		[\s\$]           # Whitespace OR end of line
+		((\d+?) )?       # If there are digits ater the space it's 'Jan 13 2000'
+	/x;
+
 	# Next we look for alpha months followed by a digit if we didn't find a numeric month above
 	# This will find: "April 13" and also "13 April 1995"
-	if (!$month && $str =~ m/(\d{1,2})?\s*($MONTH_REGEXP)\s+(\d{1,4})[\s\$]((\d+?) )?/) {
+	if (!$month && $str =~ $rule_2) {
 
 		# Get the numerical number for this month
 		my $month_name = lc(substr($2,0,3));
@@ -217,8 +234,16 @@ sub strtotime {
 
 	###########################################################################
 
+	state $rule_3 = qr/
+		(\b|T)             # Anchor point
+		(\d{1,2}):         # Hours
+		(\d{1,2}):?        # Minutes
+		(\d{2}(Z|\.\d+)?)? # Seconds (optional)
+		\ ?(am|pm|AM|PM)?  # AMPM (optional)
+	/x;
+
 	# Now we look for times: 10:14, 10:14:17, 08:15pm
-	if ($str =~ m/(\b|T)(\d{1,2}):(\d{1,2}):?(\d{2}(Z|\.\d+)?)?( ?am|pm|AM|PM)?/) {
+	if ($str =~ $rule_3) {
 		$hour = int($2);
 		$min  = int($3);
 		$sec  = $4 || 0; # Not int() cuz it might be float for milliseconds
@@ -288,8 +313,17 @@ sub strtotime {
 	# or
 	# 11:53 PST (One to four chars after a time)
 	my $tz_offset_seconds = 0;
-	my $tz_str = '';
-	if ($ret && $str =~ m/(\s([+-])(\d{1,2})(\d{2})|\d{2} ([A-Z]{1,4})\b|\d{2}(Z)$)/) {
+	my $tz_str            = '';
+	state $tz_rule        = qr/
+		(\s([+-])(\d{1,2})(\d{2}) # +1000 or -700 (three or four digits)
+		|
+		\d{2}\                    # Only match chars if they're AFTER a time
+		([A-Z]{1,4})\b            # Capitalized TZ at end of string
+		|
+		\d{2}(Z)$)                # Just a simple Z at the end
+	/x;
+
+	if ($ret && $str =~ $tz_rule) {
 		my $str_offset = 0;
 
 		# String timezone: 11:53 PST
