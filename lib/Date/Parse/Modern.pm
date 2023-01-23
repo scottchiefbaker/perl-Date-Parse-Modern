@@ -16,7 +16,7 @@ our @EXPORT = ('strtotime');
 our $VERSION = 0.3;
 
 # https://timezonedb.com/download
-our $TZ_OFFSET = {
+my $TZ_OFFSET = {
 	'ACDT'  =>  10, 'ACST'  =>   9, 'ACT'   =>  -5, 'ACWST' =>   8, 'ADT'   =>  -3, 'AEDT'  =>  11, 'AEST'  =>  10, 'AFT'   =>   4,
 	'AKDT'  =>  -8, 'AKST'  =>  -9, 'ALMT'  =>   6, 'AMST'  =>   5, 'AMT'   =>   4, 'ANAST' =>  12, 'ANAT'  =>  12, 'AQTT'  =>   5,
 	'ART'   =>  -3, 'AST'   =>  -4, 'AWDT'  =>   9, 'AWST'  =>   8, 'AZOST' =>   0, 'AZOT'  =>  -1, 'AZST'  =>   5, 'AZT'   =>   4,
@@ -44,21 +44,29 @@ our $TZ_OFFSET = {
 	'YAPT'  =>  10, 'YEKST' =>   6, 'YEKT'  =>   5, 'Z'     =>   0,
 };
 
+# Separator between dates pieces: '-' or '/' or '\'
+my $sep = qr/[\/\\-]/;
+
+# Force a local timezone offset (used for unit tests)
+our $LOCAL_TZ_OFFSET = undef;
+
+# Use caching for repeated lookups for the same TZ offset
+our $USE_TZ_CACHE = 1;
+
+# These are undocumented package variables. They could be changed to support
+# alternate languages but there are caveats. These are cached and changing
+# them after strtotime() is called won't affect anything. No one has requested
+# alternate languages, so I'm leaving this undocumented for now.
 our $MONTH_MAP = {
 	'jan' => 1, 'feb' => 2, 'mar' => 3, 'apr' => 4 , 'may' => 5 , 'jun' => 6 ,
 	'jul' => 7, 'aug' => 8, 'sep' => 9, 'oct' => 10, 'nov' => 11, 'dec' => 12,
 };
 
-# Force a local timezone offset (used for unit tests)
-our $LOCAL_TZ_OFFSET = undef;
-
-our $MONTH_REGEXP = qr/Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December/i;
-
-# Cache repeated lookups for the same TZ offset
-our $USE_TZ_CACHE = 1;
-
-# Separator between dates pieces: '-' or '/' or '\'
-our $sep = qr/[\/\\-]/;
+# See above
+our $MONTH_REGEXP = qr/
+	Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|
+	Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December
+/ix;
 
 ###############################################################################
 ###############################################################################
