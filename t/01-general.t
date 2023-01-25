@@ -48,6 +48,7 @@ is(strtotime('Thu, 13 Oct 94 10:13:13 +0700')         , 782017993   , 'Numeric t
 is(strtotime('Thu, 09 Sep 96 11:12:13 -500')          , 842285533   , 'Numeric timezone offset three digits');
 is(strtotime('Fri Dec 17 00:00:00 1901 GMT')          , -2147212800 , 'Textual timezone after year 1901');
 is(strtotime('Tue Jan 16 23:59:59 2048 GMT')          , 2462831999  , 'Textual timezone after year 2048');
+is(strtotime('25/Jan/2023:11:15:40 -0800')            , 1674674140  , 'Run together Apache format');
 
 # Check the extremes
 is(strtotime('2800-06-06'), 26205840000, 'Way in the future');
