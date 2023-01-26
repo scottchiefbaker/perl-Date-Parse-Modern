@@ -33,6 +33,7 @@ is(strtotime('Dec/21/1993 17:05:00')        , 756522300        , 'Short form 3')
 cmp_ok(strtotime('May  4 01:04:16')         , '>=', 1683187456 , 'Text date WITHOUT year');
 cmp_ok(strtotime('10:00:00')                , '>=', 1673632800 , 'Time only');
 cmp_ok(strtotime('21/dec 17:05')            , '>=', 1703207100 , 'Short form 4 no year');
+cmp_ok(strtotime('Feb  9 18:47:58')         , '>=', 1675997278 , 'Modern syslog no year');
 
 # Zulu timezone tests
 is(strtotime('1994-11-05T13:15:30Z')  , 784041330 , 'ISO 8601 T+Z');
