@@ -21,6 +21,7 @@ is(strtotime('1970-01-01 00:00:01 UTC') , 1    , 'Epoch + 1');
 # General tests
 is(strtotime('1979-02-24')                  , 288691200        , 'YYYY-MM-DD');
 is(strtotime('1979/04/16')                  , 293097600        , 'YYYY/MM/DD');
+is(strtotime('12-24-1999')                  , 946022400        , 'MM-DD-YYYY');
 is(strtotime('Sat May  8 21:24:31 2021')    , 1620537871       , 'Human text string');
 is(strtotime('2000-02-29T12:34:56')         , 951856496        , 'ISO 8601');
 is(strtotime('1995-01-24T09:08:17.1823213') , 790967297.1823213, 'ISO 8601 with milliseconds');
@@ -50,6 +51,7 @@ is(strtotime('Thu, 09 Sep 96 11:12:13 -500')          , 842285533   , 'Numeric t
 is(strtotime('Fri Dec 17 00:00:00 1901 GMT')          , -2147212800 , 'Textual timezone after year 1901');
 is(strtotime('Tue Jan 16 23:59:59 2048 GMT')          , 2462831999  , 'Textual timezone after year 2048');
 is(strtotime('25/Jan/2023:11:15:40 -0800')            , 1674674140  , 'Run together Apache format');
+is(strtotime('2023-01-18T05:04:08-0500')              , 1674036248  , 'ISO 8601 with numeric TZ offset');
 
 # Check the extremes
 is(strtotime('2800-06-06'), 26205840000, 'Way in the future');
