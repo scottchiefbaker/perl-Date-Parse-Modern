@@ -185,7 +185,7 @@ sub strtotime {
 		\s+
 		(\d{1,4})        # Digits
 		[\s\$]           # Whitespace OR end of line
-		((\d+?) )?       # If there are digits ater the space it's 'Jan 13 2000'
+		((\d{4}) )?       # If there are digits ater the space it's 'Jan 13 2000'
 	/x;
 
 	# Next we look for alpha months followed by a digit if we didn't find a numeric month above
