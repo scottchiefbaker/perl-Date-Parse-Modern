@@ -323,21 +323,24 @@ sub strtotime {
 	my $tz_offset_seconds = 0;
 	my $tz_str            = '';
 	state $tz_rule        = qr/
-		(\s([+-])(\d{1,2})(\d{2}) # +1000 or -700 (three or four digits)
+		(
+		(\s|:\d\d)             # Start AFTER a space, or time (:12)
+		([+-])(\d{1,2})(\d{2}) # +1000 or -700 (three or four digits)
 		|
-		\d{2}\                    # Only match chars if they're AFTER a time
-		([A-Z]{1,4})\b            # Capitalized TZ at end of string
+		\d{2}\                 # Only match chars if they're AFTER a time
+		([A-Z]{1,4})\b         # Capitalized TZ at end of string
 		|
-		\d{2}(Z)$)                # Just a simple Z at the end
+		\d{2}(Z)$              # Just a simple Z at the end
+		)
 	/x;
 
 	if ($ret && $str =~ $tz_rule) {
 		my $str_offset = 0;
 
 		# String timezone: 11:53 PST
-		if ($5 || $6)  {
+		if ($6 || $7)  {
 			# Whichever form matches, the TZ is that one
-			my $tz_code = $5 || $6 || '';
+			my $tz_code = $6 || $7 || '';
 
 			# Lookup the timezone offset in the table
 			$str_offset  = $TZ_OFFSET->{$tz_code} || 0;
@@ -349,9 +352,9 @@ sub strtotime {
 		} else {
 			# Break the input string into parts so we can do math
 			# +1000 = 10 hours, -0700 = 7 hours, +0430 = 4.5 hours
-			$str_offset = ($3 + ($4 / 60)) * 3600;
+			$str_offset = ($4 + ($5 / 60)) * 3600;
 
-			if ($2 eq "-") {
+			if ($3 eq "-") {
 				$str_offset *= -1;
 			}
 
