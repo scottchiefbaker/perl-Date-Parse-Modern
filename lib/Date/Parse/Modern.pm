@@ -13,7 +13,7 @@ our @EXPORT = ('strtotime');
 
 ###############################################################################
 
-our $VERSION = 0.3;
+our $VERSION = 0.4;
 
 # https://timezonedb.com/download
 my $TZ_OFFSET = {
