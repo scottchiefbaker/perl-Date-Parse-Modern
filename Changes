@@ -1,6 +1,6 @@
 Revision history for Date-Parse-Modern
 
-0.3    2023-01-19
+0.3    2023-01-26
        99% format parity with Date::Parse
        Better debugging
        Better memory usage for caching
