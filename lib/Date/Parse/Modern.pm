@@ -312,8 +312,15 @@ sub strtotime {
 
 	# If we have all the requisite pieces we build a unixtime
 	my $ret;
-	eval {
+	my $err = $@ || 'Error' unless eval {
 		$ret = Time::Local::timegm_modern($sec, $min, $hour, $day, $month - 1, $year);
+
+		return 1;
+	};
+
+	if ($err && $err =~ /Undefined subroutine/) {
+		print STDERR $err;
+		return undef;
 	};
 
 	# If we find a timezone offset we take that in to account now
