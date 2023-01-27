@@ -1,13 +1,13 @@
 #!/usr/bin/env perl
 
+package Date::Parse::Modern;
+
 use strict;
 use warnings;
 use v5.10;
 
-package Date::Parse::Modern;
-
 use Carp;
-use Time::Local;
+use Time::Local 1.26;
 use Exporter 'import';
 our @EXPORT = ('strtotime');
 
