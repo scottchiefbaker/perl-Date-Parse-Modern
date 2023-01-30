@@ -136,8 +136,8 @@ sub strtotime {
 		return undef;
 	}
 
-	my ($year, $month, $day) = (0, 0, 0);
-	my ($hour, $min  , $sec) = (0, 0, 0);
+	my ($year, $month, $day)      = (0, 0, 0);
+	my ($hour, $min  , $sec, $ms) = (0, 0, 0, 0);
 
 	###########################################################################
 	###########################################################################
@@ -310,6 +310,11 @@ sub strtotime {
 		$year += 1900;
 	}
 
+	# Time::Local doesn't support fractional seconds, so we make an int version
+	# and then add the ms after the timegm_modern() conversion
+	$ms  = $sec - int($sec);
+	$sec = int($sec);
+
 	# If we have all the requisite pieces we build a unixtime
 	my $ret;
 	my $err = $@ || 'Error' unless eval {
@@ -322,6 +327,8 @@ sub strtotime {
 		print STDERR $err;
 		return undef;
 	};
+
+	$ret += $ms;
 
 	# If we find a timezone offset we take that in to account now
 	# Either: +1000 or -0700
