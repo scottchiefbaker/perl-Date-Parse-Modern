@@ -180,13 +180,13 @@ sub strtotime {
 	###########################################################################
 
 	state $rule_2 = qr/
-		(\d{1,2})?       # Maybe some digits before month
+		(\d{1,2})?            # Maybe some digits before month
 		\s*
-		($MONTH_REGEXP)  # A textual month
+		($MONTH_REGEXP)       # A textual month
 		\s+
-		(\d{1,4})        # Digits
-		[\s\$]           # Whitespace OR end of line
-		((\d{4}) )?      # If there are digits ater the space it's 'Jan 13 2000'
+		(\d{1,4})             # Digits
+		[\s\$]                # Whitespace OR end of line
+		((\d{2}|\d{4})[ \$])? # If there are two or four digits ater it's a year
 	/x;
 
 	# Next we look for alpha months followed by a digit if we didn't find a numeric month above
