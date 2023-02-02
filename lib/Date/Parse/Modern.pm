@@ -373,7 +373,7 @@ sub strtotime {
 				$str_offset *= -1;
 			}
 
-			$tz_str = "$2$3$4";
+			$tz_str = "$3$4$5";
 		}
 
 		$tz_offset_seconds = $str_offset;
