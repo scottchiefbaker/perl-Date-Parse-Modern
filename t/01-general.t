@@ -43,6 +43,7 @@ cmp_ok(strtotime('Feb  9 18:47:58')         , '>=', 1675997278 , 'Modern syslog 
 
 # Zulu timezone tests
 is(strtotime('1994-11-05T13:15:30Z')  , 784041330 , 'ISO 8601 T+Z');
+is(strtotime('[2020-01-24T09:08:17Z]'), 1579885697, 'ISO 8601 T+Z in brackets');
 is(strtotime('2002-07-22 10:00:00 Z') , 1027332000, 'ISO 8601 HH:MM Z');
 is(strtotime('2002-07-22 10:00Z')     , 1027332000, 'ISO 8601 HH:MMZ');
 
