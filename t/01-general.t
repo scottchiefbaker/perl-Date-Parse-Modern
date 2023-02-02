@@ -63,4 +63,30 @@ is(strtotime('2023-01-18T05:04:08-0500')              , 1674036248  , 'ISO 8601 
 is(strtotime('2800-06-06'), 26205840000, 'Way in the future');
 is(strtotime('1800-06-06'), -5351155200, 'Way in the past');
 
+# Not using this right now, it's just for testing
+#is(sub_has_errors('good'), "", 'good');
+#is(sub_has_errors('bad'),  "", 'bad');
+
 done_testing();
+
+# Returns any syntax error if found, or "" on success
+sub sub_has_errors {
+	no strict "refs";
+	my $sub_name = shift();
+
+	eval { &$sub_name(); };
+
+	my $err = $@;
+	$err =~ s/\s+$//;
+
+	return $err;
+}
+
+sub good {
+	return 1;
+}
+
+sub bad {
+	bogus_sub();
+	return 1;
+}
