@@ -112,6 +112,15 @@ B<Note:> Strings with only time are assumed to be the current day. Example: C<10
 B<Note:> In strings with numeric B<and> textual time zone offsets, the numeric is used. Example:
 C<14 Nov 1994 11:34:32 -0500 (EST)>
 
+=head1 Will you support XYZ format?
+
+Everyone has their B<favorite> date/time format, and we'd like to support as many
+as possible. We have tried to support as much of
+L<ISO 8601|https://en.wikipedia.org/wiki/ISO_8601> as possible, but we
+cannot support everything. Every new format we support runs the risk of slowing
+down things for existing formats. You can submit a feature request on Github
+for new formats but we may reject them if adding support would slow down others.
+
 =head1 Bugs/Features
 
 Please submit bugs and feature requests on Github:
