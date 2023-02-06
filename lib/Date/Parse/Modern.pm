@@ -231,11 +231,10 @@ sub strtotime {
 
 		# Month starts string: dec/21/93 or feb/14/1999
 		if ($before eq "") {
-			$after =~ m/(\d{2})$sep(\d{2,4})/;
-
-			$day  = $1;
-			$year = $2;
-
+			if ($after =~ m/(\d{2})$sep(\d{2,4})/) {
+				$day  = $1;
+				$year = $2;
+			}
 		# Month in the middle: 21/dec/93
 		} elsif ($before && $after) {
 			$before =~ m/(\d+)\D/; # Just the digits
