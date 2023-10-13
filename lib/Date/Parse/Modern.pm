@@ -267,8 +267,7 @@ sub strtotime {
 		$hour = int($2);
 		$min  = int($3);
 		$sec  = $4 || 0; # Not int() cuz it might be float for milliseconds
-
-		$sec =~ s/Z$//;
+		$sec  =~ s/Z$//; # Remove and Z at the end
 
 		# The string of AM or PM
 		my $ampm = lc($6 || "");
@@ -403,8 +402,8 @@ sub strtotime {
 	$ret -= $tz_offset_seconds;
 
 	if ($debug) {
-		my $color = "\e[38;5;45m";
-		my $reset = "\e[0m";
+		my $color  = "\e[38;5;45m";
+		my $reset  = "\e[0m";
 		my $header = sprintf("%*s = YYYY-MM-DD HH:II:SS (timezone offset)", length($str) + 2, "Input string");
 		my $output = sprintf("'%s' = %02d-%02d-%02d %02d:%02d:%02d (%s = %d seconds)", $str, $year || -1, $month || -1, $day || -1, $hour, $min, $sec, $tz_str, $tz_offset_seconds);
 
