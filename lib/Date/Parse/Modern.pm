@@ -366,6 +366,7 @@ sub strtotime {
 		)
 	/x;
 
+	# If we have a string with a timezone piece
 	if ($ret && $str =~ $tz_rule) {
 		my $str_offset = 0;
 
