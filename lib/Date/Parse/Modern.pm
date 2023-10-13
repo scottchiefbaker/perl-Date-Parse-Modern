@@ -305,16 +305,20 @@ sub strtotime {
 	###########################################################################
 	###########################################################################
 
-	# Sanity check some basic boundaries
-	# I don't think we need this any more since we eval() and timegm_modern() will barf and return undef
-	#if ($month > 12 || $day > 31 || $hour > 23 || $min > 60 || $sec > 61) {
-	#    return undef;
-	#}
+	# If there is no month, we assume the current month
+	if (!$month) {
+		$month = (localtime())[4] + 1;
+	}
 
-	$month ||= (localtime())[4] + 1; # If there is no month, we assume the current month
-	$day   ||= (localtime())[3];     # If there is no day, we assume the current day
+	# If there is no day, we assume the current day
+	if (!$day) {
+		$day = (localtime())[3];
+	}
+
 	# If we STILL don't have a year it may be a time only string so we assume it's the current year
-	$year  ||= (localtime())[5] + 1900;
+	if (!$year) {
+		$year = (localtime())[5] + 1900;
+	}
 
 	# Convert any two digit years to four digits
 	if ($year < 100) {
