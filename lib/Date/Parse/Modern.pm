@@ -326,11 +326,14 @@ sub strtotime {
 
 	# If we have all the requisite pieces we build a unixtime
 	my $ret;
-	my $err = $@ || 'Error' unless eval {
+	my $ok = eval {
 		$ret = Time::Local::timegm_modern($sec, $min, $hour, $day, $month - 1, $year);
 
 		return 1;
 	};
+	# This has to be *immediately* after the eval or something else might
+	# tromp on the error message
+	my $err = $@;
 
 	if ($err && $err =~ /Undefined subroutine/) {
 		print STDERR $err;
