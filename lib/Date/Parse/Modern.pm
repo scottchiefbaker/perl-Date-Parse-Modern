@@ -105,7 +105,7 @@ order. In all cases, the day of the week is ignored in the input string.
 
 B<Note:> Strings without a year are assumed to be in the current year. Example: C<May 15th, 10:15am>
 
-B<Note:> Strings with only a date are assumed to occur at the midnight. Example: C<2023-01-15>
+B<Note:> Strings with only a date are assumed to occur at midnight. Example: C<2023-01-15>
 
 B<Note:> Strings with only time are assumed to be the current day. Example: C<10:15am>
 
