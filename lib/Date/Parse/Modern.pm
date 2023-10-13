@@ -214,8 +214,11 @@ sub strtotime {
 		} else {
 			$day = int($3);
 
-			# *IF* there is a $5 it's a year
-			$year ||= int($5 || 0);
+			# *IF* we still don't have a year
+			if (!$year) {
+				my $part = $5 || 0;
+				$year    = int($part)
+			}
 		}
 	}
 
