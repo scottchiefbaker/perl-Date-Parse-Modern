@@ -181,11 +181,6 @@ sub strtotime {
 		}
 	}
 
-	# The year may be on the end of the string: Sat May  8 21:24:31 2021
-	if (!$year) {
-		($year) = $str =~ m/\s(\d{4})\b/;
-	}
-
 	###########################################################################
 
 	state $rule_2 = qr/
@@ -250,6 +245,11 @@ sub strtotime {
 				$year = $1;
 			}
 		}
+	}
+
+	# The year may be on the end of the string: Sat May  8 21:24:31 2021
+	if (!$year) {
+		($year) = $str =~ m/\b(\d{4})\b/;
 	}
 
 	###########################################################################
