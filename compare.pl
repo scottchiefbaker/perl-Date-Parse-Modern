@@ -33,6 +33,7 @@ my $debug;
 my $string;
 my $file;
 my @test_strings = get_test_strings();
+my $filter;
 
 GetOptions(
 	'debug'      => \$debug,
@@ -40,9 +41,14 @@ GetOptions(
 	'individual' => sub { benchmark_individual(@test_strings); },
 	'benchmark'  => sub { benchmark_test_suite(@test_strings); },
 	'file=s'     => \$file,
+	'filter=s'   => \$filter,
 );
 
-my $filter = $ARGV[0] || "";
+# If there is only one argument, it's a bare string to testing
+if (scalar(@ARGV) == 1) {
+	$debug  = 1;
+	$string = $ARGV[0];
+}
 
 ###############################################################################
 ###############################################################################
