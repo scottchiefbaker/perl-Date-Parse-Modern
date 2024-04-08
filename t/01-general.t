@@ -35,6 +35,7 @@ is(strtotime('dec 21 1994 17:05')          , 788058300        , 'MMM DD YYYY');
 is(strtotime('dec 21 94 17:05')            , 788058300        , 'MMM DD YY');
 is(strtotime('dec 21 94 17:05 GMT')        , 788029500        , 'MMM DD YY text timezone');
 is(strtotime('dec 21 94 17:05 -1700')      , 788090700        , 'MMM DD YY numeric timezone');
+is(strtotime('January 15th 2020')          , 1579075200       , 'Day with a st/th/rd after it');
 
 cmp_ok(strtotime('May  4 01:04:16')         , '>=', 1683187456 , 'Text date WITHOUT year');
 cmp_ok(strtotime('10:00:00')                , '>=', 1673632800 , 'Time only');
