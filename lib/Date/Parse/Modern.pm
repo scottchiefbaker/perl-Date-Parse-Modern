@@ -256,7 +256,7 @@ sub strtotime {
 	}
 
 	# Match 1st, 3rd, 29th
-	if (!$day && $str =~ m/\b(\d{2})[a-zA-Z]{2}/) {
+	if (!$day && $str =~ m/\b(\d{2})(st|rd|th)/) {
 		$day = $1;
 	}
 
