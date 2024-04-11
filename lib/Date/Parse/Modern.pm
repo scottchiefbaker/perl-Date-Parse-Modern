@@ -255,8 +255,8 @@ sub strtotime {
 		($year) = $str =~ m/\b(\d{4})\b/;
 	}
 
-	# Match 1st, 3rd, 29th
-	if (!$day && $str =~ m/\b(\d{1,2})(st|rd|th)/) {
+	# Match 1st, 2nd, 3rd, 29th
+	if (!$day && $str =~ m/\b(\d{1,2})(st|nd|rd|th)/) {
 		$day = $1;
 	}
 
