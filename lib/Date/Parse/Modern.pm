@@ -75,7 +75,7 @@ our $MONTH_REGEXP = qr/
 
 =head1 NAME
 
-C<Date::Parse::Modern> - Provide string to unixtime conversions
+Date::Parse::Modern - Provide string to unixtime conversions
 
 =head1 DESCRIPTION
 
