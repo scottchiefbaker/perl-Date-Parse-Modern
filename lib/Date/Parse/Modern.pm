@@ -418,7 +418,7 @@ sub strtotime {
 		my $color  = "\e[38;5;45m";
 		my $reset  = "\e[0m";
 		my $header = sprintf("%*s = YYYY-MM-DD HH:II:SS (timezone offset)", length($str) + 2, "Input string");
-		my $output = sprintf("'%s' = %02d-%02d-%02d %02d:%02d:%02d (%s = %d seconds)", $str, $year || -1, $month || -1, $day || -1, $hour, $min, $sec, $tz_str, $tz_offset_seconds);
+		my $output = sprintf("%12s = %02d-%02d-%02d %02d:%02d:%02d (%s = %d seconds)", "'$str'", $year || -1, $month || -1, $day || -1, $hour, $min, $sec, $tz_str, $tz_offset_seconds);
 
 		print STDERR $color . $header . $reset . "\n";
 		print STDERR $output . "\n";
