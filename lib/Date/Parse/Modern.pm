@@ -113,7 +113,7 @@ B<Note:> Strings with only time are assumed to be the current day. Example: C<10
 B<Note:> In strings with numeric B<and> textual time zone offsets, the numeric is used. Example:
 C<14 Nov 1994 11:34:32 -0500 (EST)>
 
-B<Note:> In all cases, the day of the week is ignored in the input string. Example: `Mon Mar 25 2024`
+B<Note:> In all cases, the day of the week is ignored in the input string. Example: C<Mon Mar 25 2024>
 
 =head1 Will you support XYZ format?
 
