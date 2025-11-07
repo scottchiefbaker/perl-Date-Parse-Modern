@@ -157,9 +157,9 @@ sub strtotime {
 
 	state $rule_1 = qr/
 		\b
-		((\d{4})$sep(\d{2})$sep(\d{2}) # YYYY-MM-DD
+		((\d{4})$sep(\d{1,2})$sep(\d{1,2}) # YYYY-MM-DD
 		|
-		(\d{2})$sep(\d{2})$sep(\d{4})) # DD-MM-YYYY
+		(\d{1,2})$sep(\d{1,2})$sep(\d{4})) # DD-MM-YYYY
 	/x;
 
 	# First we look to see if we have anything that mathches YYYY-MM-DD (numerically)
