@@ -20,8 +20,13 @@ is(strtotime('1970-01-01 00:00:01 UTC') , 1    , 'Epoch + 1');
 
 # General tests
 is(strtotime('1979-02-24')                 , 288691200        , 'YYYY-MM-DD');
+is(strtotime('1979-2-24')                  , 288691200        , 'YYYY-M-DD');
+is(strtotime('1979-2-4')                   , 286963200        , 'YYYY-M-D');
 is(strtotime('1979/04/16')                 , 293097600        , 'YYYY/MM/DD');
+is(strtotime('1979/4/6')                   , 292233600        , 'YYYY/M/D');
 is(strtotime('12-24-1999')                 , 946022400        , 'MM-DD-YYYY');
+is(strtotime('2-4-1999')                   , 923040000        , 'M-D-YYYY');
+is(strtotime('10-4-1999')                  , 923731200        , 'MM-D-YYYY');
 is(strtotime('Sat May  8 21:24:31 2021')   , 1620537871       , 'Human text string');
 is(strtotime('2000-02-29T12:34:56')        , 951856496        , 'ISO 8601');
 is(strtotime('1995-01-24T09:08:17.1823213'), 790967297.1823213, 'ISO 8601 with milliseconds');
