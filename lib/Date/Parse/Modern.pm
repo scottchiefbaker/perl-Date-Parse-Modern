@@ -80,8 +80,8 @@ Date::Parse::Modern - Provide string to unixtime conversions
 =head1 DESCRIPTION
 
 C<Date::Parse::Modern> provides a single function C<strtotime()> which takes a
-datetime string and returns an integer unixtime.  Care was given to support the
-most modern style strings that you would commonly find in log files or on the
+datetime string and returns an integer unixtime.  Care was given to support
+modern datetime strings that one would commonly find in log files or on the
 internet.
 
 =head1 USAGE

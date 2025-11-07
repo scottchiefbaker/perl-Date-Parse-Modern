@@ -5,8 +5,8 @@ Date::Parse::Modern - Provide string to unixtime conversions
 # DESCRIPTION
 
 `Date::Parse::Modern` provides a single function `strtotime()` which takes a
-datetime string and returns an integer unixtime.  Care was given to support the
-most modern style strings that you would commonly find in log files or on the
+datetime string and returns an integer unixtime.  Care was given to support
+modern datetime strings that one would commonly find in log files or on the
 internet.
 
 # USAGE
@@ -49,8 +49,8 @@ Example: `Mon Mar 25 2024`
 
 # Will you support XYZ format?
 
-Everyone has their **favorite** date/time format, and we'd like to support as many
-as possible. We have tried to support as much of
+Everyone has their **favorite** date/time format, and we'd like to support as
+many as possible. We have tried to support as much of
 [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) as possible, but we
 cannot support everything. Every new format we support runs the risk of slowing
 down things for existing formats. You can submit a feature request on Github
