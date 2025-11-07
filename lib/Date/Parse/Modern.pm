@@ -79,9 +79,10 @@ Date::Parse::Modern - Provide string to unixtime conversions
 
 =head1 DESCRIPTION
 
-C<Date::Parse::Modern> provides a single function C<strtotime()> which takes a datetime string
-and returns a unixtime.  Care was given to support the most modern style strings that you would
-commonly find in log files or on the internet.
+C<Date::Parse::Modern> provides a single function C<strtotime()> which takes a
+datetime string and returns an integer unixtime.  Care was given to support the
+most modern style strings that you would commonly find in log files or on the
+internet.
 
 =head1 USAGE
 
@@ -95,30 +96,36 @@ C<Date::Parse::Modern> exports the C<strtotime()> function automatically.
 
   my $unixtime = strtotime('1979-02-24'); # 288691200
 
-Simply feed C<strtotime()> a string with some type of date or time in it, and it will return an
-integer unixtime. If the string is unparseable, or a weird error occurs, it will return C<undef>.
+Simply feed C<strtotime()> a string with some type of date or time in it,
+and it will return an integer unixtime. If the string is unparseable, or a
+weird error occurs, it will return C<undef>.
 
-All the "magic" in C<strtotime()> is done using regular expressions that look for common datetime
-formats. Common formats like YYYY-MM-DD and HH:II:SS are easily detected and converted to the
-appropriate formats. This allows the date or time to be found anywhere in the string, in (almost) any
-order. If you limit your string to only the date/time portion the parsing will
-be much quicker. Shorter input equals faster parsing.
+All the "magic" in C<strtotime()> is done using regular expressions that look
+for common datetime formats. Common formats like C<YYYY-MM-DD> and C<HH:II:SS>
+are easily detected and converted to the appropriate formats. This allows the
+date or time to be found anywhere in the string, in (almost) any order. If you
+limit your string to only the date/time portion the parsing will be much
+quicker. Shorter input equals faster parsing.
 
-B<Note:> Strings without a year are assumed to be in the current year. Example: C<May 15th, 10:15am>
+B<Note:> Strings without a year are assumed to be in the current year.
+Example: C<May 15th, 10:15am>
 
-B<Note:> Strings with only a date are assumed to occur at midnight. Example: C<2023-01-15>
+B<Note:> Strings with only a date are assumed to occur at midnight.
+Example: C<2023-01-15>
 
-B<Note:> Strings with only time are assumed to be the current day. Example: C<10:15am>
+B<Note:> Strings with only time are assumed to be the current day.
+Example: C<10:15am>
 
-B<Note:> In strings with numeric B<and> textual time zone offsets, the numeric is used. Example:
-C<14 Nov 1994 11:34:32 -0500 (EST)>
+B<Note:> In strings with numeric B<and> textual time zone offsets, the numeric
+is used. Example: C<14 Nov 1994 11:34:32 -0500 (EST)>
 
-B<Note:> In all cases, the day of the week is ignored in the input string. Example: C<Mon Mar 25 2024>
+B<Note:> In all cases, the day of the week is ignored in the input string.
+Example: C<Mon Mar 25 2024>
 
 =head1 Will you support XYZ format?
 
-Everyone has their B<favorite> date/time format, and we'd like to support as many
-as possible. We have tried to support as much of
+Everyone has their B<favorite> date/time format, and we'd like to support as
+many as possible. We have tried to support as much of
 L<ISO 8601|https://en.wikipedia.org/wiki/ISO_8601> as possible, but we
 cannot support everything. Every new format we support runs the risk of slowing
 down things for existing formats. You can submit a feature request on Github
