@@ -46,7 +46,7 @@ my $TZ_OFFSET = {
 };
 
 # Separator between dates pieces: '-' or '/' or '\'
-my $sep = qr/[\/\\-]/;
+our $sep = qr/[\/\\-]/;
 
 # Force a local timezone offset (used for unit tests)
 our $LOCAL_TZ_OFFSET = undef;
