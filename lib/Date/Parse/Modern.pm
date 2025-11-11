@@ -361,7 +361,9 @@ sub strtotime {
 		return undef;
 	};
 
-	$ret += $ms;
+	if ($ms) {
+		$ret += $ms;
+	}
 
 	# If we find a timezone offset we take that in to account now
 	# Either: +1000 or -0700
@@ -382,7 +384,7 @@ sub strtotime {
 	/x;
 
 	# If we have a string with a timezone piece
-	if ($ret && $str =~ $tz_rule) {
+	if (defined($ret) && $str =~ $tz_rule) {
 		my $str_offset = 0;
 
 		# String timezone: 11:53 PST
@@ -411,7 +413,7 @@ sub strtotime {
 
 		$tz_offset_seconds = $str_offset;
 	# No timezone info found so we assume the local timezone
-	} elsif ($ret) {
+	} elsif (defined($ret)) {
 		my $local_offset = get_local_offset($ret);
 
 		$tz_offset_seconds = $local_offset;
