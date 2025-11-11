@@ -20,6 +20,9 @@ is(strtotime('1970-01-01 00:00:01 UTC') , 1    , 'Epoch + 1');
 
 # General tests
 is(strtotime('1979-02-24')                 , 288691200        , 'YYYY-MM-DD');
+is(strtotime('1970-01-01')                 , 28800            , '1970-01-01');
+is(strtotime('1970-01-01 00:00:00')        , 28800            , '1970-01-01 00:00:00');
+is(strtotime('1970-01-01 00:00:01')        , 28801            , '1970-01-01 00:00:01');
 is(strtotime('1979-2-24')                  , 288691200        , 'YYYY-M-DD');
 is(strtotime('1979-2-4')                   , 286963200        , 'YYYY-M-D');
 is(strtotime('1979/04/16')                 , 293097600        , 'YYYY/MM/DD');
