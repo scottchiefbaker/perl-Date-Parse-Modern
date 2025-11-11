@@ -14,14 +14,15 @@ is(strtotime(undef), undef, 'Undef');
 is(strtotime(12345), undef, 'Numeric string');
 
 # This will vary based on a users timezone
-cmp_ok(strtotime('1970-01-01')     , '<', 86400, 'Epoch local timezone');
 is(strtotime('1970-01-01 00:00:00 UTC') , 0    , 'Epoch with time');
 is(strtotime('1970-01-01 00:00:01 UTC') , 1    , 'Epoch + 1');
 
 # General tests
 is(strtotime('1979-02-24')                 , 288691200        , 'YYYY-MM-DD');
 is(strtotime('1970-01-01')                 , 28800            , '1970-01-01');
+is(strtotime('1970-01-01 UTC')             , 0                , '1970-01-01 UTC');
 is(strtotime('1970-01-01 00:00:00')        , 28800            , '1970-01-01 00:00:00');
+is(strtotime('1970-01-01 00:00:00 UTC')    , 0                , '1970-01-01 00:00:00 UTC');
 is(strtotime('1970-01-01 00:00:01')        , 28801            , '1970-01-01 00:00:01');
 is(strtotime('1979-2-24')                  , 288691200        , 'YYYY-M-DD');
 is(strtotime('1979-2-4')                   , 286963200        , 'YYYY-M-D');
