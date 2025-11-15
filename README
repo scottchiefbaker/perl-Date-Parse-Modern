@@ -11,7 +11,9 @@ internet.
 
 # USAGE
 
-    use Date::Parse::Modern;
+```perl
+use Date::Parse::Modern;
+```
 
 `Date::Parse::Modern` exports the `strtotime()` function automatically.
 
@@ -19,7 +21,9 @@ internet.
 
 ## strtotime($string)
 
-    my $unixtime = strtotime('1979-02-24'); # 288691200
+```perl
+my $unixtime = strtotime('1979-02-24'); # 288691200
+```
 
 Simply feed `strtotime()` a string with some type of date or time in it,
 and it will return an integer unixtime. If the string is unparseable, or a
