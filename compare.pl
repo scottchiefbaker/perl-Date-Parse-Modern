@@ -112,7 +112,8 @@ sub benchmark_test_suite {
 	my @times = @_;
 	my $num   = 10000;
 
-	print "Comparing " . scalar(@times) . " strings\n";
+	my $version = $Date::Parse::Modern::VERSION;
+	print "Comparing " . scalar(@times) . " strings with Date::Parse::Modern v$version\n\n";
 
 	cmpthese($num, {
 		'Date::Parse::Modern' => sub { foreach(@times) { my $x = Date::Parse::Modern::strtotime($_); }; },
