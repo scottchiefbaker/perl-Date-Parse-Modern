@@ -47,6 +47,9 @@ is(strtotime('dec 21 94 17:05 -1700')      , 788090700        , 'MMM DD YY numer
 is(strtotime('June 1st 2020')              , 1590998400       , 'One digit day with a st/th/rd after it');
 is(strtotime('June 27th 2020')             , 1593244800       , 'Two digit day with a st/th/rd after it');
 
+# Bugs
+is(strtotime('11/23/2025 08:00 PM'), 1763956800, 'Github issue #2');
+
 cmp_ok(strtotime('May  4 01:04:16')         , '>=', 1683187456 , 'Text date WITHOUT year');
 cmp_ok(strtotime('10:00:00')                , '>=', 1673632800 , 'Time only');
 cmp_ok(strtotime('21/dec 17:05')            , '>=', 1703207100 , 'Short form 4 no year');
