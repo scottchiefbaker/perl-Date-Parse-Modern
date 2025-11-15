@@ -119,6 +119,9 @@ Example: C<10:15am>
 B<Note:> In strings with numeric B<and> textual time zone offsets, the numeric
 is used. Example: C<14 Nov 1994 11:34:32 -0500 (EST)>
 
+B<Note:> If a string contains neither a textual nor numeric timezone, the local
+timezone is assumed. Example: C<11/23/2025 08:00 PM>
+
 B<Note:> In all cases, the day of the week is ignored in the input string.
 Example: C<Mon Mar 25 2024>
 
