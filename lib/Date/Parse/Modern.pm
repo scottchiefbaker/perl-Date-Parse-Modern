@@ -369,7 +369,7 @@ sub strtotime {
 	# Either: +1000 or -0700
 	# or
 	# 11:53 PST (One to four chars after a time)
-	my $tz_offset_seconds = 0;
+	my $tz_offset_seconds = undef;
 	my $tz_str            = '';
 	state $tz_rule        = qr/
 		(
@@ -385,19 +385,20 @@ sub strtotime {
 
 	# If we have a string with a timezone piece
 	if (defined($ret) && $str =~ $tz_rule) {
-		my $str_offset = 0;
+		my $str_offset = undef;
 
 		# String timezone: 11:53 PST
 		if ($6 || $7)  {
 			# Whichever form matches, the TZ is that one
 			my $tz_code = $6 || $7 || '';
 
-			# Lookup the timezone offset in the table
-			$str_offset  = $TZ_OFFSET->{$tz_code} || 0;
-			# Timezone offsets are in hours, so we convert to seconds
-			$str_offset *= 3600;
-
-			$tz_str = $tz_code;
+			# AM/PM sometimes gets flagged as the TZ so we skip it if it happens
+			if (uc($tz_code) !~ /^(AM|PM)$/) {
+				# Lookup the timezone offset in the table
+				$str_offset  = $TZ_OFFSET->{$tz_code} || 0;
+				# Timezone offsets are in hours, so we convert to seconds
+				$str_offset *= 3600;
+			}
 		# Numeric format: +1000 or -0700
 		} else {
 			# Break the input string into parts so we can do math
@@ -411,9 +412,13 @@ sub strtotime {
 			$tz_str = "$3$4$5";
 		}
 
-		$tz_offset_seconds = $str_offset;
+		if (defined($str_offset)) {
+			$tz_offset_seconds = $str_offset;
+		}
+	}
+
 	# No timezone info found so we assume the local timezone
-	} elsif (defined($ret)) {
+	if (defined($ret) && !defined($tz_offset_seconds)) {
 		my $local_offset = get_local_offset($ret);
 
 		$tz_offset_seconds = $local_offset;
