@@ -395,6 +395,13 @@ sub strtotime {
 			# Whichever form matches, the TZ is that one
 			$tz_str = $6 || $7 || '';
 
+			# In rare cases we get timezone after AM/PM: "12:12 PM CST"
+			if (in_array($tz_str, ("AM", "PM", "am", "pm"))) {
+				if ($str =~ /$tz_str ([A-Z]{1,4})\b/) {
+					$tz_str = $1;
+				}
+			}
+
 			# AM/PM sometimes gets flagged as the TZ so we skip it if it happens
 			if (uc($tz_str) !~ /^(AM|PM)$/) {
 				# Lookup the timezone offset in the table
@@ -477,6 +484,14 @@ sub get_local_offset {
 	if ($USE_TZ_CACHE) {
 		$x->{$cache_key} = $ret;
 	}
+
+	return $ret;
+}
+
+sub in_array {
+	my ($needle, @haystack) = @_;
+
+	my $ret = grep { $_ eq $needle; } @haystack;
 
 	return $ret;
 }
