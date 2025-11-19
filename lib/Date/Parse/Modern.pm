@@ -393,12 +393,12 @@ sub strtotime {
 		# String timezone: 11:53 PST
 		if ($6 || $7)  {
 			# Whichever form matches, the TZ is that one
-			my $tz_code = $6 || $7 || '';
+			$tz_str = $6 || $7 || '';
 
 			# AM/PM sometimes gets flagged as the TZ so we skip it if it happens
-			if (uc($tz_code) !~ /^(AM|PM)$/) {
+			if (uc($tz_str) !~ /^(AM|PM)$/) {
 				# Lookup the timezone offset in the table
-				$str_offset  = $TZ_OFFSET->{$tz_code} || 0;
+				$str_offset  = $TZ_OFFSET->{$tz_str} || 0;
 				# Timezone offsets are in hours, so we convert to seconds
 				$str_offset *= 3600;
 			}
