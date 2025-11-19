@@ -72,6 +72,7 @@ is(strtotime('Fri Dec 17 00:00:00 1901 GMT')          , -2147212800 , 'Textual t
 is(strtotime('Tue Jan 16 23:59:59 2048 GMT')          , 2462831999  , 'Textual timezone after year 2048');
 is(strtotime('25/Jan/2023:11:15:40 -0800')            , 1674674140  , 'Run together Apache format');
 is(strtotime('2023-01-18T05:04:08-0500')              , 1674036248  , 'ISO 8601 with numeric TZ offset');
+is(strtotime('Tue Nov 18 12:06:16 PM CST 2025')       , 1763489176  , 'PM and a Timezone');
 
 # Check the extremes
 is(strtotime('2800-06-06'), 26205840000, 'Way in the future');
