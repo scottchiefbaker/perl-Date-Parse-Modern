@@ -262,7 +262,7 @@ sub strtotime {
 
 	# The year may be on the end of the string: Sat May  8 21:24:31 2021
 	if (!$year) {
-		($year) = $str =~ m/\b(\d{4})\b/;
+		($year) = $str =~ m/\b((?<![+-])\d{4})\b/;
 	}
 
 	# Match 1st, 2nd, 3rd, 29th
