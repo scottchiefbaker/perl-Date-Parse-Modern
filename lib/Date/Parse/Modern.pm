@@ -504,15 +504,15 @@ __END__
 Performance varies depending on string input
 
 Benchmarking the entire test suite with this module and
-Date::Parse::str2time() gets the following stats.
+Date::Parse::str2time() gets the following statistics.
 
+Test results from: 2026-01-13 on my AMD Ryzen 7 5700G
 ==================================================================
 $ perl compare.pl --bench
-Comparing 24 strings with Date::Parse::Modern v0.8
+Comparing 24 strings with Date::Parse::Modern v0.9
 
                       Rate         Date::Parse Date::Parse::Modern
-Date::Parse         1721/s                  --                -59%
-Date::Parse::Modern 4237/s                146%                  --
-==================================================================
+Date::Parse         1650/s                  --                -59%
+Date::Parse::Modern 4000/s                142%                  --
 
 # vim: tabstop=4 shiftwidth=4 autoindent softtabstop=4
