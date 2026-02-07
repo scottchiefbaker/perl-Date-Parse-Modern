@@ -267,7 +267,8 @@ sub strtotime {
 	}
 
 	# Match 1st, 2nd, 3rd, 29th
-	if (!$day && $str =~ m/\b(\d{1,2})(st|nd|rd|th)/) {
+	# or two digits followed by a comma: May 15, 2026
+	if (!$day && $str =~ m/\b(\d{1,2})(st|nd|rd|th|,)/) {
 		$day = $1;
 	}
 
