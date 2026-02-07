@@ -49,6 +49,10 @@ is(strtotime('June 27th 2020')             , 1593244800       , 'Two digit day w
 
 # Bugs
 is(strtotime('11/23/2025 08:00 PM'), 1763956800, 'Github issue #2');
+is(strtotime('May 15th, 10:15am')  , 1778868900, 'Github issue #5');
+is(strtotime('May 15, 10:15am')    , 1778868900, 'Github issue #5');
+is(strtotime('May 15th, 2026')     , 1778832000, 'Github issue #5');
+is(strtotime('May 15, 2026')       , 1778832000, 'Github issue #5');
 
 cmp_ok(strtotime('May  4 01:04:16')         , '>=', 1683187456 , 'Text date WITHOUT year');
 cmp_ok(strtotime('10:00:00')                , '>=', 1673632800 , 'Time only');
