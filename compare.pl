@@ -65,6 +65,10 @@ if ($filter) {
 	@test_strings = grep { /$filter/; } @test_strings;
 }
 
+my $ver = $Date::Parse::Modern::VERSION;
+$ver = color(228, "v$ver");
+print "Testing with Date::Parse::Modern $ver\n\n";
+
 printf("%38s = %15s = %15s\n", "Input String", "Date::Parse", "D::P::Modern");
 foreach (@test_strings) {
 	my $x = Date::Parse::str2time($_) // 0;
