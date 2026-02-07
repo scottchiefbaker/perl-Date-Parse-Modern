@@ -231,20 +231,14 @@ sub load_strings_from_file {
 	return @ret;
 }
 
-# Debug print variable using either Data::Dump::Color (preferred) or Data::Dumper
 # Creates methods k() and kd() to print, and print & die respectively
 BEGIN {
-	if (eval { require Data::Dump::Color }) {
-		*k = sub { Data::Dump::Color::dd(@_) };
-	} else {
-		require Data::Dumper;
-		*k = sub { print Data::Dumper::Dumper(\@_) };
-	}
-
-	sub kd {
-		k(@_);
-
-		printf("Died at %2\$s line #%3\$s\n",caller());
-		exit(15);
-	}
+    if (eval { require Dump::Krumo }) {
+        *k  = sub { Dump::Krumo::kx(@_) };
+        *kd = sub { Dump::Krumo::kxd(@_) };
+    } else {
+        require Data::Dumper;
+        *k  = sub { print Data::Dumper::Dumper(\@_) };
+        *kd = sub { print Data::Dumper::Dumper(\@_); die; };
+    }
 }
