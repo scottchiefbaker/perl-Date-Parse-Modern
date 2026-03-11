@@ -437,6 +437,10 @@ sub strtotime {
 		$tz_str            = 'UNSPECIFIED';
 	}
 
+	if (!defined($tz_offset_seconds)) {
+		$tz_offset_seconds = 0;
+	}
+
 	# Subtract the timezone offset from the unixtime
 	$ret -= $tz_offset_seconds;
 
