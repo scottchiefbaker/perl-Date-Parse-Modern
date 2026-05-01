@@ -144,6 +144,24 @@ Please submit bugs and feature requests on Github:
 
 Scott Baker - https://www.perturb.org/
 
+=head1 SEE ALSO
+
+=over
+
+=item *
+L<Date::Parse>
+
+=item *
+L<Time::Str>
+
+=item *
+L<Time::Piece>
+
+=item *
+L<DateTime>
+
+=back
+
 =cut
 
 ###############################################################################

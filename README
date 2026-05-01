@@ -1,15 +1,15 @@
-# NAME
+## Name
 
 Date::Parse::Modern - Provide string to unixtime conversions
 
-# DESCRIPTION
+## Description
 
 `Date::Parse::Modern` provides a single function `strtotime()` which takes a
 datetime string and returns an integer unixtime.  Care was given to support
 modern datetime strings that one would commonly find in log files or on the
 internet.
 
-# USAGE
+## Usage
 
 ```perl
 use Date::Parse::Modern;
@@ -17,9 +17,9 @@ use Date::Parse::Modern;
 
 `Date::Parse::Modern` exports the `strtotime()` function automatically.
 
-# FUNCTIONS
+## Functions
 
-## strtotime($string)
+### strtotime($string)
 
 ```perl
 my $unixtime = strtotime('1979-02-24'); # 288691200
@@ -54,7 +54,7 @@ timezone is assumed. Example: `11/23/2025 08:00 PM`
 **Note:** In all cases, the day of the week is ignored in the input string.
 Example: `Mon Mar 25 2024`
 
-# Will you support XYZ format?
+## Will you support XYZ format?
 
 Everyone has their **favorite** date/time format, and we'd like to support as
 many as possible. We have tried to support as much of
@@ -63,12 +63,21 @@ cannot support everything. Every new format we support runs the risk of slowing
 down things for existing formats. You can submit a feature request on Github
 for new formats but we may reject them if adding support would slow down others.
 
-# Bugs/Features
+## Bugs/Features
 
 Please submit bugs and feature requests on Github:
 
-    https://github.com/scottchiefbaker/perl-Date-Parse-Modern
+```
+https://github.com/scottchiefbaker/perl-Date-Parse-Modern
+```
 
-# AUTHORS
+## Authors
 
 Scott Baker - https://www.perturb.org/
+
+## See Also
+
+- [Date::Parse](https://metacpan.org/pod/Date%3A%3AParse)
+- [Time::Str](https://metacpan.org/pod/Time%3A%3AStr)
+- [Time::Piece](https://metacpan.org/pod/Time%3A%3APiece)
+- [DateTime](https://metacpan.org/pod/DateTime)
