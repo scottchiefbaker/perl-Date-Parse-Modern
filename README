@@ -17,6 +17,19 @@ use Date::Parse::Modern;
 
 `Date::Parse::Modern` exports the `strtotime()` function automatically.
 
+## Speed
+
+`Date::Parse::Modern` is considerably faster than `Date::Parse`.
+
+```
+$ perl compare.pl --bench
+Comparing 24 strings with Date::Parse::Modern
+
+                      Rate         Date::Parse Date::Parse::Modern
+Date::Parse         1650/s                  --                -59%
+Date::Parse::Modern 4000/s                142%                  --
+```
+
 ## Functions
 
 ### strtotime($string)
