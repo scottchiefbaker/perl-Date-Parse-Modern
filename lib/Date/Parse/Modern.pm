@@ -90,17 +90,6 @@ internet.
 
 C<Date::Parse::Modern> exports the C<strtotime()> function automatically.
 
-=head1 SPEED
-
-C<Date::Parse::Modern> is considerably faster than C<Date::Parse>.
-
-  $ perl compare.pl --bench
-  Comparing 24 strings with Date::Parse::Modern
-
-                        Rate         Date::Parse Date::Parse::Modern
-  Date::Parse         1650/s                  --                -59%
-  Date::Parse::Modern 4000/s                142%                  --
-
 =head1 FUNCTIONS
 
 =head2 strtotime($string)
@@ -135,6 +124,17 @@ timezone is assumed. Example: C<11/23/2025 08:00 PM>
 
 B<Note:> In all cases, the day of the week is ignored in the input string.
 Example: C<Mon Mar 25 2024>
+
+=head1 SPEED
+
+C<Date::Parse::Modern> is considerably faster than C<Date::Parse>.
+
+  $ perl compare.pl --bench
+  Comparing 24 strings with Date::Parse::Modern
+
+                        Rate         Date::Parse Date::Parse::Modern
+  Date::Parse         1650/s                  --                -59%
+  Date::Parse::Modern 4000/s                142%                  --
 
 =head1 Will you support XYZ format?
 
